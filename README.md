@@ -17,7 +17,7 @@
 * [Contact](#contact)
 
 ## Exemple
-<p>Voici un exemple d'un diagramme non animé: </p>
+<p>Pas encore d'exemple et d'image</p>
 <p align="center">
   <img src="" width="" alt="accessibility text">
 </p>
