@@ -7,3 +7,4 @@ chrome.runtime.onInstalled.addListener(function(){
 chrome.webNavigation.onCompleted.addListener(function(){
     alert("Tu as chargé une nouvelle page!")
 });*/
+
