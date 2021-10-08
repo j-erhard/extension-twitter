@@ -41,14 +41,19 @@ function affichageTweets(){
         // Change l'aspect visuel de tweets
         // distance x - distance y - dégradé - taille - (couleur r,g,b, transparence) - inset ou non
         article.style.boxShadow = "none";
+        article.style.borderRadius = "10px";
         const X = Math.floor(Math.random() * 6);
         if (X===0)
-            article.style.boxShadow = "0px 0px 10px 10px rgba(240, 25, 25, 0.8)";
+            article.style.boxShadow = "0px 0px 10px 10px rgba(240, 25, 25, 0.8) inset";
         else if (X===1)
-            article.style.boxShadow = "0px 0px 10px 10px rgba(240, 240, 25, 0.8)";
+            article.style.boxShadow = "0px 0px 10px 10px rgba(240, 240, 25, 0.8) inset";
         else if (X===2)
-            article.style.boxShadow = "0px 0px 10px 10px rgba(150, 150, 150, 0.8)";
+            article.style.boxShadow = "0px 0px 10px 10px rgba(150, 150, 150, 0.8) inset";
+
+        // Ajout d'un bouton
+        ajoutBouton(article);
     }
+
     return articles.length;
 }
 
@@ -77,8 +82,32 @@ function getUrl(article) {
  * @param article
  */
 function ajoutBouton(article) {
-    //ajout d'un bouton (pas à la bonne place)
-    if (!(!document.getElementsByClassName("bouton_report123"))){
+    //ajout d'un bouton
+    var groupBoutons = article.getElementsByClassName('css-1dbjc4n r-1ta3fxp r-18u37iz r-1wtj0ep r-1s2bzr4 r-1mdbhws');
+    for (const groupBouton of groupBoutons) {
+        // groupBouton.style.backgroundColor = "red";
+        console.log(groupBouton.childElementCount);
+        if (groupBouton.childElementCount <= 5) {
+            var input = document.createElement("bouton");
+            input.setAttribute("name", "bouton_report123");
+            input.setAttribute("value", "value_input");
+            input.setAttribute("class", "bouton_report");
+            input.setAttribute("type", "button");
+            input.style.backgroundColor="#5050ff";
+            input.style.borderRadius = "10px";
+            input.style.padding = "0 5px";
+            input.innerHTML = "signaler";
+            input.addEventListener("click", function() {
+                alert("You just clicked me!");
+            });
+            groupBouton.appendChild(input);
+
+
+        }
+    }
+
+    /*if (groupBouton.getElementsByClassName('css-1dbjc4n r-18u37iz r-1h0z5md bouton-report')){
+        console.log("wesh alors les belges!!!")
         var input = document.createElement("bouton");
         input.setAttribute("name", "bouton_report123");
         input.setAttribute("value", "value_input");
@@ -87,7 +116,7 @@ function ajoutBouton(article) {
         article.appendChild(input);
         console.log(document.getElementsByClassName("bouton_report123"));
         console.log(article.innerHTML);
-    }
+    }*/
 }
 
 document.addEventListener('readystatechange', () => firstLoadTweet());
