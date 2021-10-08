@@ -51,7 +51,7 @@ function affichageTweets(){
             article.style.boxShadow = "0px 0px 10px 10px rgba(150, 150, 150, 0.8) inset";
 
         // Ajout d'un bouton
-        ajoutBouton(article);
+        ajoutBouton(article, url_tweet);
     }
 
     return articles.length;
@@ -81,28 +81,28 @@ function getUrl(article) {
  * Ajout d'un bouton signaler
  * @param article
  */
-function ajoutBouton(article) {
+function ajoutBouton(article, url_tweet) {
     //ajout d'un bouton
     var groupBoutons = article.getElementsByClassName('css-1dbjc4n r-1ta3fxp r-18u37iz r-1wtj0ep r-1s2bzr4 r-1mdbhws');
     for (const groupBouton of groupBoutons) {
         // groupBouton.style.backgroundColor = "red";
         console.log(groupBouton.childElementCount);
-        if (groupBouton.childElementCount <= 5) {
-            var input = document.createElement("bouton");
-            input.setAttribute("name", "bouton_report123");
-            input.setAttribute("value", "value_input");
-            input.setAttribute("class", "bouton_report");
-            input.setAttribute("type", "button");
-            input.style.backgroundColor="#5050ff";
+        if (groupBouton.parentElement.childElementCount <= 1) {
+            var input = document.createElement("div");
+            input.setAttribute("role", "button");
+            input.setAttribute("tabindex", "0");
+            input.setAttribute("class", "css-18t94o4 css-1dbjc4n r-1777fci r-bt1l66 r-1ny4l3l r-bztko3 r-lrvibr");
+            input.style.padding = "0 10px";
+            input.style.backgroundColor="#0093f5";
+            input.style.width = "80px";
+            input.style.height = "0px";
             input.style.borderRadius = "10px";
-            input.style.padding = "0 5px";
+            input.style.textAlign = "center";
             input.innerHTML = "signaler";
             input.addEventListener("click", function() {
-                alert("You just clicked me!");
+                alert("You just clicked me: " + url_tweet);
             });
-            groupBouton.appendChild(input);
-
-
+            groupBouton.parentElement.appendChild(input);
         }
     }
 
