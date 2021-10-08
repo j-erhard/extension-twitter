@@ -87,14 +87,18 @@ function ajoutBouton(article, url_tweet) {
     for (const groupBouton of groupBoutons) {
         // groupBouton.style.backgroundColor = "red";
         console.log(groupBouton.childElementCount);
+        groupBouton.parentElement.style.display = "inline-block";
+        // groupBouton.parentElement.style.verticalAlign = "middle";
+        groupBouton.style.width = "70%";
+        groupBouton.style.float = "left";
         if (groupBouton.parentElement.childElementCount <= 1) {
             var input = document.createElement("div");
             input.setAttribute("role", "button");
             input.setAttribute("tabindex", "0");
             input.setAttribute("class", "css-18t94o4 css-1dbjc4n r-1777fci r-bt1l66 r-1ny4l3l r-bztko3 r-lrvibr");
-            input.style.padding = "0 10px";
+            input.style.margin = "12px 0 10% 10%";
             input.style.backgroundColor="#0093f5";
-            input.style.width = "80px";
+            input.style.width = "20%";
             input.style.height = "0px";
             input.style.borderRadius = "10px";
             input.style.textAlign = "center";
