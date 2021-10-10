@@ -7,25 +7,21 @@
   "content_scripts": [
     {
       "matches": ["https://twitter.com/*", "https://twitter/*", "http://twitter/*"],
-      "js": ["content.js"],
-      "resources": ["script.js"]
+      "js": ["browser_action/content_script/content.js"],
+      "resources": ["browser_action/content_script/script.js"]
     }
   ],
 
   "browser_action": {
-    "default_popup": "MyPopup.html",
+    "default_popup": "browser_action/popup/popup.html",
     "default_title": "twitter",
     "browser_style": true
   },
 
-  "web_accessible_resources": [
-    "content.js"
-  ],
-
   "permissions": ["activeTab", "tabs"],
 
   "background": {
-    "scripts": ["background.js"],
+    "scripts": ["browser_action/content_script/background.js"],
     "persistent": true
   }
 }
