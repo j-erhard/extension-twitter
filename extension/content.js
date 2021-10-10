@@ -86,12 +86,15 @@ function getUrl(article) {
     return url;
 }
 
-/**
- * Ajout d'un bouton signaler
- * @param article
- * @param url_tweet
- */
+/***************************************************************
+ *                 Ajout des 3 types deboutons                 *
+ ***************************************************************/
 function ajoutBouton(article, url_tweet) {
+    // ajoutBoutonSignaler(article, url_tweet);
+    ajoutBoutonSignalerV2(article, url_tweet);
+    // ajoutBoutonPlusDInfo(article, url_tweet);
+}
+function ajoutBoutonSignaler(article, url_tweet) {
     //ajout d'un bouton
     var groupBoutons = article.getElementsByClassName('css-1dbjc4n r-1ta3fxp r-18u37iz r-1wtj0ep r-1s2bzr4 r-1mdbhws');
     for (const groupBouton of groupBoutons) {
@@ -113,6 +116,60 @@ function ajoutBouton(article, url_tweet) {
             input.innerHTML = "signaler";
             input.addEventListener("click", function() {
                 alert("You just clicked me: " + url_tweet);
+            });
+            groupBouton.parentElement.appendChild(input);
+        }
+    }
+}
+function ajoutBoutonSignalerV2(article, url_tweet) {
+    //ajout d'un bouton
+    var groupBoutons = article.getElementsByClassName('css-1dbjc4n r-1ta3fxp r-18u37iz r-1wtj0ep r-1s2bzr4 r-1mdbhws');
+    for (const groupBouton of groupBoutons) {
+        groupBouton.parentElement.style.display = "inline-block";
+        groupBouton.style.width = "70%";
+        groupBouton.style.float = "left";
+        groupBouton.style.marginRight = "6%";
+        if (groupBouton.parentElement.childElementCount <= 1) {
+            var input = document.createElement("div");
+            input.setAttribute("role", "button");
+            input.setAttribute("tabindex", "0");
+            input.setAttribute("class", "css-18t94o4 css-1dbjc4n r-1777fci r-bt1l66 r-1ny4l3l r-bztko3 r-lrvibr");
+            input.style.marginTop = "12px";
+            input.style.backgroundColor="#ff9b00";
+            input.style.width = "20%";
+            input.style.height = "0px";
+            input.style.borderRadius = "10px";
+            input.style.textAlign = "center";
+            input.innerHTML = "plus d'info";
+            input.addEventListener("click", function() {
+                alert("You just clicked me: " + url_tweet);
+                //ajout d'un message comme quoi le tweet a bien été signalé
+                var confirmation = document.createElement("div");
+                confirmation.style.position = "fixed";
+                confirmation.setAttribute("id", "tweetSignale");
+                confirmation.style.zIndex = "1000";
+                confirmation.style.backgroundColor = "#31e300";
+                confirmation.style.border = "1px solid";
+                confirmation.style.textAlign = "center";
+                confirmation.style.alignItems = "middle";
+                confirmation.style.borderRadius = "20px";
+                confirmation.style.width = "100px";
+                confirmation.style.height = "50px";
+                confirmation.style.top = "100px";
+                confirmation.style.left = "50%";
+                confirmation.style.margin = "auto";
+                confirmation.innerHTML = "Tweet signalé";
+
+                document.body.appendChild(confirmation);
+                function hiddeDiv() {
+                    document.getElementById("tweetSignale").style.visibility = "hidden";
+                    console.log("azertyu");
+                }
+                // Pour utiliser setTimeout, il faut le mettre dans un autre fichier, et faire un include
+                // et add un script js dans le code html
+                //  <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+                // manifest: "resources": ["script.js"],
+                //setTimeout("hiddeDiv()", 200);
             });
             groupBouton.parentElement.appendChild(input);
         }
