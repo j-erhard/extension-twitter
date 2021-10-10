@@ -82,8 +82,58 @@ function getUrl(article) {
     url = url + article;
     // Affichage en console
     console.log(url);
-
     return url;
+}
+
+
+
+
+//################################################################################
+//###          NE FONCTIONNE PAS À CAR LOCALHOST N'EST PAS CONNUE              ###
+//################################################################################
+
+// return un objet Json | si tu le mets dans une variable tu peut enssuite
+// récupérer l'url en faisant un res.body.tweetStatus ou un truc du genre
+// res = signaleTweet(url)
+// res.body.tweetStatus
+function getTypeTweet(url_tweet){
+    return fetch('http://localhost:8081/tweetStatus', {
+        method:'GET',
+        Headers:{
+            'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify({
+            url: url_tweet
+        })
+    }).then(res => {
+        console.log(res);
+        return res.json();
+    })
+        .then(data => console.log(data))
+        .catch(error => console.log('ERROR'));
+}
+
+
+// return un objet Json avec un message indiquant si c'est enregistré ou non
+// res = signaleTweet(url)
+// res.body.message
+function signaleTweet(url_tweet){
+
+    return fetch('http://localhost:8081/signalementTweet', {
+        method:'POST',
+        Headers:{
+            'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify({
+            url:"https://twitter.com/matthew_d_green/status/1446888859464257539"
+        })
+    }).then(res => {
+        return res.json();
+    })
+        // .then(res => console.log())
+        // .then(data => console.log(data))
+        .catch(error => console.log('ERROR'));
+
 }
 
 /***************************************************************
