@@ -96,21 +96,30 @@ function getUrl(article) {
 // récupérer l'url en faisant un res.body.tweetStatus ou un truc du genre
 // res = signaleTweet(url)
 // res.body.tweetStatus
-function getTypeTweet(url_tweet){
-    return fetch('http://localhost:8081/tweetStatus', {
-        method:'GET',
-        Headers:{
-            'Content-Type' : 'application/json'
+async function getTypeTweet(url_tweet){
+    let url = "http://localhost:8081/tweetStatus"
+
+    let response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                //Origin: origin
+            },
+            body: JSON.stringify({
+                url:url_tweet
+            })
+
         },
-        body: JSON.stringify({
-            url: url_tweet
-        })
-    }).then(res => {
-        console.log(res);
-        return res.json();
-    })
-        .then(data => console.log(data))
-        .catch(error => console.log('ERROR'));
+        {mode: 'cors'});
+    if (response.ok) { // if HTTP-status is 200-299
+        // get the response body
+        let json = await response.json();
+        console.log(JSON.stringify(json))
+        return JSON.stringify(json)
+    } else {
+        return "Error"
+    }
 }
 
 
@@ -118,6 +127,7 @@ function getTypeTweet(url_tweet){
 // res = signaleTweet(url)
 // res.body.message
 function signaleTweet(url_tweet){
+
 
     return fetch('http://localhost:8081/signalementTweet', {
         method:'POST',
@@ -131,7 +141,7 @@ function signaleTweet(url_tweet){
         return res.json();
     })
         // .then(res => console.log())
-        // .then(data => console.log(data))
+        .then(data => console.log(data))
         .catch(error => console.log('ERROR'));
 
 }
@@ -142,6 +152,7 @@ function signaleTweet(url_tweet){
 function ajoutBouton(article, url_tweet) {
     // ajoutBoutonSignaler(article, url_tweet);
     ajoutBoutonSignalerV2(article, url_tweet);
+    console.log(getTypeTweet(url_tweet));
     // ajoutBoutonPlusDInfo(article, url_tweet);
 }
 function ajoutBoutonSignaler(article, url_tweet) {

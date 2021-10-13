@@ -2,7 +2,17 @@ const express = require ('express');
 const app = express();
 const PORT = 8081;
 
+app.use(express.static('.'))
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    res.header("Access-Control-Allow-Credentials", "true");
+    next();
+});
 app.use(express.json());
+
+
 
 app.listen(
     PORT,
@@ -18,12 +28,15 @@ function respondStatus(url){
 
 }
 
-app.get('/tweetStatus',(req, res) => {
-    const { url } = req.body;
+app.post('/tweetStatus',(req, res) => {
+    console.log("start");
 
+    const { url } = req.body;
+    console.log(url);
     if (!url){
         res.status(413).send({data:"bad request"});
     }
+    // attention si pas d'url, fait crash l'api
     let etat = respondStatus(url);
 
     res.status(200);
