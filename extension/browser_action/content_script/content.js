@@ -32,28 +32,33 @@ function resolveXAndAfterX(x) {
 /**
  * Affichage complémentaire pour chaques tweets -> boutons + couleur
  */
-function affichageTweets(){
+async function affichageTweets(){
     // récupère tous les articles (tweets)
     const articles = document.body.getElementsByTagName('article');
     // boucles sur tous les articles (tweets)
     for (const article of articles) {
-        // récupère l'url
+        // récupère l'url    !!!!! NE FONCTIONNE PAS SUR LES ADDs DE TWITTER !!!
         const url_tweet = getUrl(article.innerHTML);
-
-        // Change l'aspect visuel de tweets
+        // Change l'aspect visuel des tweets
         // distance x - distance y - dégradé - taille - (couleur r,g,b, transparence) - inset ou non
-        article.style.boxShadow = "none";
+        // article.style.boxShadow = "none"; fait bugger
         article.style.borderRadius = "10px";
-        const X = Math.floor(Math.random() * 6);
-        if (X===0)
-            article.style.boxShadow = "0px 0px 10px 10px rgba(240, 25, 25, 0.8) inset";
-        else if (X===1)
-            article.style.boxShadow = "0px 0px 10px 10px rgba(240, 240, 25, 0.8) inset";
-        else if (X===2)
-            article.style.boxShadow = "0px 0px 10px 10px rgba(150, 150, 150, 0.8) inset";
-
-        // Ajout d'un bouton
-        ajoutBouton(article, url_tweet);
+        // status tweet: "Vrai", "Faux", "Tendancieux", "En cours de signalemnt", "Non_singalé", "signalé", "signalé_plus"
+        let statusTweet = await getTypeTweet(url_tweet)
+        // console.log(JSON.stringify(statusTweet))
+        switch (statusTweet) {
+            case "Vrai":
+                article.style.boxShadow = "0px 0px 10px 10px rgba(25, 240, 25, 0.8) inset";
+                break;
+            case "Faux":
+                article.style.boxShadow = "0px 0px 10px 10px rgba(240, 25, 25, 0.8) inset";
+                break;
+            case "Tendancieux":
+                article.style.boxShadow = "0px 0px 10px 10px rgba(150, 150, 150, 0.8) inset";
+                break;
+        }
+        // Ajout bouton
+        ajoutBouton(article, url_tweet, statusTweet);
     }
 }
 
@@ -85,77 +90,10 @@ function getUrl(article) {
     return url;
 }
 
-
-
-
-//################################################################################
-//###          NE FONCTIONNE PAS À CAR LOCALHOST N'EST PAS CONNUE              ###
-//################################################################################
-
-// return un objet Json | si tu le mets dans une variable tu peut enssuite
-// récupérer l'url en faisant un res.body.tweetStatus ou un truc du genre
-// res = signaleTweet(url)
-// res.body.tweetStatus
-async function getTypeTweet(url_tweet){
-    let url = "http://localhost:8081/tweetStatus"
-
-    let response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                //Origin: origin
-            },
-            body: JSON.stringify({
-                url:url_tweet
-            })
-
-        },
-        {mode: 'cors'});
-    if (response.ok) { // if HTTP-status is 200-299
-        // get the response body
-        let json = await response.json();
-        console.log(JSON.stringify(json))
-        return JSON.stringify(json)
-    } else {
-        return "Error"
-    }
-}
-
-
-// return un objet Json avec un message indiquant si c'est enregistré ou non
-// res = signaleTweet(url)
-// res.body.message
-function signaleTweet(url_tweet){
-
-
-    return fetch('http://localhost:8081/signalementTweet', {
-        method:'POST',
-        Headers:{
-            'Content-Type' : 'application/json'
-        },
-        body: JSON.stringify({
-            url:"https://twitter.com/matthew_d_green/status/1446888859464257539"
-        })
-    }).then(res => {
-        return res.json();
-    })
-        // .then(res => console.log())
-        .then(data => console.log(data))
-        .catch(error => console.log('ERROR'));
-
-}
-
 /***************************************************************
- *                 Ajout des 3 types deboutons                 *
+ *                 Ajout des 3 types de boutons                *
  ***************************************************************/
-function ajoutBouton(article, url_tweet) {
-    // ajoutBoutonSignaler(article, url_tweet);
-    ajoutBoutonSignalerV2(article, url_tweet);
-    console.log(getTypeTweet(url_tweet));
-    // ajoutBoutonPlusDInfo(article, url_tweet);
-}
-function ajoutBoutonSignaler(article, url_tweet) {
+function ajoutBouton(article, url_tweet, statusTweet) {
     //ajout d'un bouton
     var groupBoutons = article.getElementsByClassName('css-1dbjc4n r-1ta3fxp r-18u37iz r-1wtj0ep r-1s2bzr4 r-1mdbhws');
     for (const groupBouton of groupBoutons) {
@@ -169,74 +107,23 @@ function ajoutBoutonSignaler(article, url_tweet) {
             input.setAttribute("tabindex", "0");
             input.setAttribute("class", "css-18t94o4 css-1dbjc4n r-1777fci r-bt1l66 r-1ny4l3l r-bztko3 r-lrvibr");
             input.style.marginTop = "12px";
-            input.style.backgroundColor="#0093f5";
             input.style.width = "20%";
             input.style.height = "0px";
             input.style.borderRadius = "10px";
             input.style.textAlign = "center";
-            input.innerHTML = "signaler";
-            input.addEventListener("click", function() {
-                alert("You just clicked me: " + url_tweet);
-            });
+            switch (statusTweet) {
+                default:
+                    input.innerHTML = "signaler";
+                    input.style.backgroundColor="#0093f5";
+                    input.addEventListener("click", function() {
+                        alert("You just clicked me: " + url_tweet);
+                    });
+                    break;
+            }
             groupBouton.parentElement.appendChild(input);
         }
     }
 }
-function ajoutBoutonSignalerV2(article, url_tweet) {
-    //ajout d'un bouton
-    var groupBoutons = article.getElementsByClassName('css-1dbjc4n r-1ta3fxp r-18u37iz r-1wtj0ep r-1s2bzr4 r-1mdbhws');
-    for (const groupBouton of groupBoutons) {
-        groupBouton.parentElement.style.display = "inline-block";
-        groupBouton.style.width = "70%";
-        groupBouton.style.float = "left";
-        groupBouton.style.marginRight = "6%";
-        if (groupBouton.parentElement.childElementCount <= 1) {
-            var input = document.createElement("div");
-            input.setAttribute("role", "button");
-            input.setAttribute("tabindex", "0");
-            input.setAttribute("class", "css-18t94o4 css-1dbjc4n r-1777fci r-bt1l66 r-1ny4l3l r-bztko3 r-lrvibr");
-            input.style.marginTop = "12px";
-            input.style.backgroundColor="#ff9b00";
-            input.style.width = "20%";
-            input.style.height = "0px";
-            input.style.borderRadius = "10px";
-            input.style.textAlign = "center";
-            input.innerHTML = "plus d'info";
-            input.addEventListener("click", function() {
-                alert("You just clicked me: " + url_tweet);
-                //ajout d'un message comme quoi le tweet a bien été signalé
-                var confirmation = document.createElement("div");
-                confirmation.style.position = "fixed";
-                confirmation.setAttribute("id", "tweetSignale");
-                confirmation.style.zIndex = "1000";
-                confirmation.style.backgroundColor = "#31e300";
-                confirmation.style.border = "1px solid";
-                confirmation.style.textAlign = "center";
-                confirmation.style.alignItems = "middle";
-                confirmation.style.borderRadius = "20px";
-                confirmation.style.width = "100px";
-                confirmation.style.height = "50px";
-                confirmation.style.top = "100px";
-                confirmation.style.left = "50%";
-                confirmation.style.margin = "auto";
-                confirmation.innerHTML = "Tweet signalé";
-
-                document.body.appendChild(confirmation);
-                function hiddeDiv() {
-                    document.getElementById("tweetSignale").style.visibility = "hidden";
-                    console.log("azertyu");
-                }
-                // Pour utiliser setTimeout, il faut le mettre dans un autre fichier, et faire un include
-                // et add un script js dans le code html
-                //  <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
-                // manifest: "resources": ["script.js"],
-                //setTimeout("hiddeDiv()", 200);
-            });
-            groupBouton.parentElement.appendChild(input);
-        }
-    }
-}
-
 
 /***************************************************************
  *                   Écouteurs de la page web                  *
@@ -258,3 +145,57 @@ window.addEventListener('scroll', function(e) {
 /***************************************************************
  *                   Récupération de données                   *
  ***************************************************************/
+
+// return un objet Json | si tu le mets dans une variable tu peut enssuite
+// récupérer l'url en faisant un res.body.tweetStatus ou un truc du genre
+// res = signaleTweet(url)
+// res.body.tweetStatus
+async function getTypeTweet(url_tweet){
+    let url = "http://localhost:8081/tweetStatus"
+
+    let response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                //Origin: origin
+            },
+            body: JSON.stringify({
+                url:url_tweet
+            })
+
+        },
+        {mode: 'cors'})
+        .then(result => result.json())
+        .then(data => {
+            console.log(data.tweetStatus);
+            return data;
+        });
+    // if HTTP-status is 200-299
+    // get the response body
+    // console.log(JSON.stringify(response.tweetStatus))
+    // console.log((response.tweetStatus))
+    return (response.tweetStatus)
+
+}
+
+
+// return un objet Json avec un message indiquant si c'est enregistré ou non
+// res = signaleTweet(url)
+// res.body.message
+function signaleTweet(url_tweet){
+    return fetch('http://localhost:8081/signalementTweet', {
+        method:'POST',
+        Headers:{
+            'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify({
+            url:"https://twitter.com/matthew_d_green/status/1446888859464257539"
+        })
+    }).then(res => {
+        return res.json(); // pour debug
+    })
+        // .then(res => console.log())
+        .then(data => console.log(data))
+        .catch(error => console.log('ERROR'));
+}
