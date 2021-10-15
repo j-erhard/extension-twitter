@@ -168,7 +168,7 @@ async function getTypeTweet(url_tweet){
         {mode: 'cors'})
         .then(result => result.json())
         .then(data => {
-            console.log(data.tweetStatus);
+            // console.log(data.tweetStatus);
             return data;
         });
     // if HTTP-status is 200-299
@@ -198,4 +198,12 @@ function signaleTweet(url_tweet){
         // .then(res => console.log())
         .then(data => console.log(data))
         .catch(error => console.log('ERROR'));
+}
+
+async function getUserStatusTweet(url_tweet){
+
+}
+
+async function upgradeUserStatusTweet(url_tweet){
+
 }
