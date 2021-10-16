@@ -1,4 +1,3 @@
-// const requete = require("../../requete_api/requete_tweet")
 // à mettre dans le manifest
 //"matches": ["<all_urls>"],
 
@@ -14,7 +13,7 @@ async function firstLoadTweet() {
             var x = await resolveXAndAfterX(100);
         } else break;
     }
-    affichageTweets();
+    await affichageTweets();
 }
 
 /**
@@ -87,42 +86,72 @@ function getUrl(article) {
     article = article.substring(0,INDEX2);
     url = url + article;
     // Affichage en console
-    console.log(url);
+    // console.log(url);
     return url;
 }
 
 /***************************************************************
  *                 Ajout des 3 types de boutons                *
  ***************************************************************/
-function ajoutBouton(article, url_tweet, statusTweet) {
+async function ajoutBouton(article, url_tweet, statusTweet) {
+    // récupération du status du  tweet par rapport à l'utilisateur
+    var statusUserTweet = parseInt(await getUserStatusTweet(url_tweet));
     //ajout d'un bouton
-    var groupBoutons = article.getElementsByClassName('css-1dbjc4n r-1ta3fxp r-18u37iz r-1wtj0ep r-1s2bzr4 r-1mdbhws');
-    for (const groupBouton of groupBoutons) {
-        groupBouton.parentElement.style.display = "inline-block";
-        groupBouton.style.width = "70%";
-        groupBouton.style.float = "left";
-        groupBouton.style.marginRight = "6%";
-        if (groupBouton.parentElement.childElementCount <= 1) {
-            var input = document.createElement("div");
-            input.setAttribute("role", "button");
-            input.setAttribute("tabindex", "0");
-            input.setAttribute("class", "css-18t94o4 css-1dbjc4n r-1777fci r-bt1l66 r-1ny4l3l r-bztko3 r-lrvibr");
-            input.style.marginTop = "12px";
-            input.style.width = "20%";
-            input.style.height = "0px";
-            input.style.borderRadius = "10px";
-            input.style.textAlign = "center";
-            switch (statusTweet) {
-                default:
-                    input.innerHTML = "signaler";
-                    input.style.backgroundColor="#0093f5";
-                    input.addEventListener("click", function() {
-                        alert("You just clicked me: " + url_tweet);
-                    });
-                    break;
-            }
-            groupBouton.parentElement.appendChild(input);
-        }
+    // console.log("statut du tweet: " + statusUserTweet);
+    var groupBouton = article.getElementsByClassName('css-1dbjc4n r-1ta3fxp r-18u37iz r-1wtj0ep r-1s2bzr4 r-1mdbhws')[0];
+    groupBouton.parentElement.style.display = "inline-block";
+    groupBouton.style.width = "70%";
+    groupBouton.style.float = "left";
+    groupBouton.style.marginRight = "6%";
+    if (groupBouton.parentElement.childElementCount <= 1) {
+        var input = document.createElement("div");
+        input.setAttribute("role", "button");
+        input.setAttribute("tabindex", "0");
+        input.setAttribute("class", "css-18t94o4 css-1dbjc4n r-1777fci r-bt1l66 r-1ny4l3l r-bztko3 r-lrvibr bouton_extension");
+        input.style.marginTop = "12px";
+        input.style.width = "20%";
+        input.style.height = "0px";
+        input.style.borderRadius = "10px";
+        input.style.textAlign = "center";
+        groupBouton.parentElement.appendChild(input);
+    }
+    var bouton_report = article.getElementsByClassName('css-18t94o4 css-1dbjc4n r-1777fci r-bt1l66 r-1ny4l3l r-bztko3 r-lrvibr bouton_extension')[0];
+    switch (statusUserTweet) {
+        case 0:
+            bouton_report.innerHTML = "signaler";
+            bouton_report.style.backgroundColor = "#0093f5";
+            bouton_report.onclick = function () {
+                upgradeUserStatusTweet(url_tweet);
+                bouton_report.innerHTML = "ajouter info";
+                bouton_report.style.backgroundColor = "#f56e00";
+                bouton_report.onclick = function () {
+                    upgradeUserStatusTweet(url_tweet);
+                    ajoutBouton(article, url_tweet, statusTweet);
+                };
+            };
+            break;
+        case 1:
+            bouton_report.innerHTML = "ajouter info";
+            bouton_report.style.backgroundColor = "#f56e00";
+            bouton_report.onclick = function () {
+                upgradeUserStatusTweet(url_tweet);
+                bouton_report.innerHTML = "+ d'info";
+                bouton_report.style.backgroundColor = "#3541ff";
+                bouton_report.onclick = function () {
+                    upgradeUserStatusTweet(url_tweet);
+                };
+            };
+            break;
+        case 2:
+            bouton_report.innerHTML = "+ d'info";
+            bouton_report.style.backgroundColor = "#3541ff";
+            bouton_report.onclick = function () {
+                upgradeUserStatusTweet(url_tweet);
+            };
+            break;
+        default:
+            console.log("ERREUR dans l'ajout du bouton !");
+            break;
     }
 }
 
@@ -131,18 +160,14 @@ function ajoutBouton(article, url_tweet, statusTweet) {
  ***************************************************************/
 document.addEventListener('readystatechange', () => firstLoadTweet());
 
-// S'enclenche dès que l'on scroll (pb: s'enclenche plusieurs fois pour un crant de la molette!!)
-var ticking = false;
-window.addEventListener('scroll', function(e) {
-    if (!ticking) {
-      window.requestAnimationFrame(function() {
-        affichageTweets();
-        ticking = false;
-      });
-    }
-    ticking = true;
+let the_timer;
+window.addEventListener('scroll', function(){
+    clearTimeout(the_timer);
+    the_timer = setTimeout(async function () {
+        await affichageTweets();
+        console.log('srcoll 3');
+    }, 100);
 });
-
 /***************************************************************
  *                   Récupération de données                   *
  ***************************************************************/
