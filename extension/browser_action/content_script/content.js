@@ -1,3 +1,4 @@
+// const requete = require("../../requete_api/requete_tweet")
 // à mettre dans le manifest
 //"matches": ["<all_urls>"],
 
@@ -180,30 +181,55 @@ async function getTypeTweet(url_tweet){
 }
 
 
-// return un objet Json avec un message indiquant si c'est enregistré ou non
-// res = signaleTweet(url)
-// res.body.message
-function signaleTweet(url_tweet){
-    return fetch('http://localhost:8081/signalementTweet', {
-        method:'POST',
-        Headers:{
-            'Content-Type' : 'application/json'
-        },
-        body: JSON.stringify({
-            url:"https://twitter.com/matthew_d_green/status/1446888859464257539"
-        })
-    }).then(res => {
-        return res.json(); // pour debug
-    })
-        // .then(res => console.log())
-        .then(data => console.log(data))
-        .catch(error => console.log('ERROR'));
-}
-
 async function getUserStatusTweet(url_tweet){
+    // /tweet/signalement/level
+    let url = "http://localhost:8081/tweet/signalement/level"
 
+    let response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                //Origin: origin
+            },
+            body: JSON.stringify({
+                url:url_tweet
+            })
+
+        },
+        {mode: 'cors'})
+        .then(result => result.json())
+        .then(data => {
+            // console.log(data.tweetStatus);
+            return data;
+        });
+    // if HTTP-status is 200-299
+    // get the response body
+    // console.log(JSON.stringify(response.tweetStatus))
+    // console.log((response.tweetStatus))
+    return (response.reportLvl)
 }
 
 async function upgradeUserStatusTweet(url_tweet){
+    let url = "http://localhost:8081/tweet/signalement/augmente"
+    let response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                //Origin: origin
+            },
+            body: JSON.stringify({
+                url:url_tweet
+            })
 
+        },
+        {mode: 'cors'})
+        .then(result => result.json())
+        .then(data => {
+            // console.log(data.tweetStatus);
+            return data;
+        });
+
+    return (response.message)
 }
