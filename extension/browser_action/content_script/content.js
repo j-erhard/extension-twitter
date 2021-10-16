@@ -165,7 +165,6 @@ window.addEventListener('scroll', function(){
     clearTimeout(the_timer);
     the_timer = setTimeout(async function () {
         await affichageTweets();
-        console.log('srcoll 3');
     }, 100);
 });
 /***************************************************************
