@@ -264,27 +264,30 @@ const showModal =()=>{
     modal.setAttribute(
         "style",`
 height:400px;
-border: none;
+border-top: solid 10px #0062a7;
+border-bottom: solid 10px #0062a7;
+border-left: none;
+border-right: none;
 top:1O0px;
-border-radius:20px;
+border-radius:10px;
 position: fixed;
-background-color: #23cbff;
+background-color: white;
 `
 
     );
 
-    modal.innerHTML = `<iframe id="popup-content"; style="height:100%; background-color: #ffffff; border: 1px solid #23cbff; border-radius: 20px"></iframe>
+    modal.innerHTML = `<div id="popup-content"; style="height:100%; width: 300px; background-color: white; border-radius: 10px"></div>
     <div style="position:absolute; top:0px; left:5px;">
-    <button style=" padding:5px; color: white;border: #c7c7c7 1px solid; border-radius: 20px; background-color: #c7c7c7; position: absolute; left: 95px; top: 350px ">Annuler</button>
+    <button style=" padding:5px; color: black;border: #0062a7 1px solid; border-radius: 10px; background-color: white; position: absolute; left: 95px; top: 350px ">Annuler</button>
    
     <h1 style="
     position: absolute;
     text-align: center;
-    left: 60px;
-    color: #2a2a2a;
-    top: 15px;
-    font-size: 18px;
-    width: 200px;">Signalement du tweet </h1>
+    left: 35px;
+    color: #004f85;
+    top: 10px;
+    font-size: 22px;
+    width: 250px;">Signalement du tweet </h1>
    
     
     <h3 style="
@@ -294,18 +297,20 @@ background-color: #23cbff;
     width: 290px;
     top: 38px;
     left: 16px;
-    color: #2a2a2a;
+    color: #0062a7;
      "> Veuillez préciser la nature de votre signalement</h3>
     
     <label style="
+    color: #0062a7;
     position: absolute;
     left: 33px;
-    top: 120px">Catégorie</label>
+    font-weight: bold;
+    top: 123px">Catégorie</label>
     <br>
     <select name="categories" id="categorie-select"
     style="
     margin-top: 5px;
-    border: #23cbff solid 1px;
+    border: #0062a7 solid 1px;
     border-radius: 10px;
     position: absolute;
     top: 140px;
@@ -317,23 +322,23 @@ background-color: #23cbff;
     </select>    
     
     <textarea style="
-    background-color: white;
+    background-color: #ffffff;
     position: absolute;
     top: 200px;
     left: 30px;
     height: 100px;
     width: 255px;
     border-radius: 10px;
-    border: 1px solid #23cbff;
+    border: 1px solid #0062a7;
     resize : none;" placeholder="Commentaires"></textarea>
     
     <button onclick="" style="
     position: absolute;
-    border-radius: 20px;
-    background-color: #23cbff;
+    border-radius: 10px;
+    background-color: #0062a7;
     color: white;
     text-align: center;
-    border: #23cbff 1px solid;
+    border: #0062a7 1px solid;
     left: 165px;
     padding:5px;
     top: 350px"> Envoyer </button>
