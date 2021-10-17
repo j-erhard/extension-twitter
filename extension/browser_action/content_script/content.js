@@ -127,6 +127,7 @@ async function ajoutBouton(article, url_tweet, statusTweet) {
                 bouton_report.onclick = function () {
                     upgradeUserStatusTweet(url_tweet);
                     ajoutBouton(article, url_tweet, statusTweet);
+                    showModal();
                 };
             };
             break;
@@ -256,4 +257,95 @@ async function upgradeUserStatusTweet(url_tweet){
         });
 
     return (response.message)
+}
+
+const showModal =()=>{
+    const modal = document.createElement('dialog');
+    modal.setAttribute(
+        "style",`
+height:400px;
+border: none;
+top:1O0px;
+border-radius:20px;
+position: fixed;
+background-color: #23cbff;
+`
+
+    );
+
+    modal.innerHTML = `<iframe id="popup-content"; style="height:100%; background-color: #ffffff; border: 1px solid #23cbff; border-radius: 20px"></iframe>
+    <div style="position:absolute; top:0px; left:5px;">
+    <button style=" padding:5px; color: white;border: #c7c7c7 1px solid; border-radius: 20px; background-color: #c7c7c7; position: absolute; left: 95px; top: 350px ">Annuler</button>
+   
+    <h1 style="
+    position: absolute;
+    text-align: center;
+    left: 60px;
+    color: #2a2a2a;
+    top: 15px;
+    font-size: 18px;
+    width: 200px;">Signalement du tweet </h1>
+   
+    
+    <h3 style="
+    font-size: 14px;
+    text-align: center;
+    position: absolute;
+    width: 290px;
+    top: 38px;
+    left: 16px;
+    color: #2a2a2a;
+     "> Veuillez préciser la nature de votre signalement</h3>
+    
+    <label style="
+    position: absolute;
+    left: 33px;
+    top: 120px">Catégorie</label>
+    <br>
+    <select name="categories" id="categorie-select"
+    style="
+    margin-top: 5px;
+    border: #23cbff solid 1px;
+    border-radius: 10px;
+    position: absolute;
+    top: 140px;
+    left: 30px">
+        <option value="politique">Politique</option>
+        <option value="sante">Santé</option>
+        <option value="environnement">Environnement</option>
+        <option value="education">Education</option>
+    </select>    
+    
+    <textarea style="
+    background-color: white;
+    position: absolute;
+    top: 200px;
+    left: 30px;
+    height: 100px;
+    width: 255px;
+    border-radius: 10px;
+    border: 1px solid #23cbff;
+    resize : none;" placeholder="Commentaires"></textarea>
+    
+    <button onclick="" style="
+    position: absolute;
+    border-radius: 20px;
+    background-color: #23cbff;
+    color: white;
+    text-align: center;
+    border: #23cbff 1px solid;
+    left: 165px;
+    padding:5px;
+    top: 350px"> Envoyer </button>
+    
+    </div>`;
+
+    document.body.appendChild(modal);
+
+    const dialog = document.querySelector("dialog");
+    dialog.showModal();
+
+    dialog.querySelector("button").addEventListener("click", () => {
+        dialog.close();
+    });
 }
