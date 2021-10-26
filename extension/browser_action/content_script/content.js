@@ -259,6 +259,7 @@ async function upgradeUserStatusTweet(url_tweet){
     return (response.message)
 }
 
+
 const showModal =()=>{
     const modal = document.createElement('dialog');
     modal.setAttribute(
@@ -332,7 +333,7 @@ background-color: white;
     border: 1px solid #0062a7;
     resize : none;" placeholder="Commentaires"></textarea>
     
-    <button onclick="" style="
+    <button class="oui" style="
     position: absolute;
     border-radius: 10px;
     background-color: #0062a7;
@@ -350,6 +351,13 @@ background-color: white;
     const dialog = document.querySelector("dialog");
     dialog.showModal();
 
+    dialog.querySelector("button").addEventListener("click", () => {
+        dialog.close();
+    });
+    document.getElementsByClassName("oui").item(0)
+        .addEventListener("click", () => {
+        dialog.close();
+    });
     dialog.querySelector("button").addEventListener("click", () => {
         dialog.close();
     });
