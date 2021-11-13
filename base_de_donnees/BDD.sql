@@ -83,14 +83,13 @@ INSERT INTO tweets (url, etat) VALUES
 ###############################################################
 
 #vérifier qu'un tweet si un tweet a déjà été signalé:
-#renvoi le tweets si il a déjà été signalé sinon rien
-SELECT * FROM tweets
+#renvoi l'id si il a déjà été signalé sinon rien
+SELECT id FROM tweets
 WHERE tweets.url = "https://twitter.com/Visa_Fr/status/14501268814461050920"
 ;
 /*
 SELECT * FROM tweets
-WHERE tweets.url = ?
-;
+WHERE tweets.url = ?;
 */
 
 #ajouter un tweets si le tweet n'a pas déjà été ajouté puis avoir son id:
