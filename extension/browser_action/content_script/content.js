@@ -1,5 +1,7 @@
 // à mettre dans le manifest
 //"matches": ["<all_urls>"],
+const requetesTweet = require("../../requete_api/tweet.requetes")
+
 
 /**
  * Fonction qui affiche les tweets vérifiée dès leurs chargements
