@@ -1,7 +1,60 @@
 // à mettre dans le manifest
 //"matches": ["<all_urls>"],
-const requetesTweet = require("../../requete_api/tweet.requetes")
 
+
+
+async function trouveEtatTweetParUrl (url_tweet)  {
+    let url_api_request = "http://localhost:8081/tweet/find/etat/tweet/by/url"
+
+    let response = await fetch(url_api_request, {
+            method: 'get',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                //Origin: origin
+            },
+            query: JSON.stringify({
+                url:url_tweet
+            })
+
+        },
+        {mode: 'cors'})
+        .then(result => result.json())
+        .then(data => {
+            return data;
+        });
+
+    return (response)
+}
+
+async function signalTweet (url_tweet,sujet_signalement,description_signalement){
+    let url_api_request = "http://localhost:8081/tweet/signale/tweet"
+
+    console.log(url_tweet)
+    console.log(sujet_signalement)
+    console.log(description_signalement)
+    let response = await fetch(url_api_request, {
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                //Origin: origin
+            },
+            body: JSON.stringify({
+                url:url_tweet,
+                sujet:sujet_signalement,
+                description:description_signalement,
+            })
+
+        },
+        {mode: 'cors'})
+        .then(result => result.json())
+        .then(data => {
+            return data;
+        });
+
+    return (response)
+}
 
 /**
  * Fonction qui affiche les tweets vérifiée dès leurs chargements
@@ -41,6 +94,7 @@ async function affichageTweets(){
     for (const article of articles) {
         // récupère l'url    !!!!! NE FONCTIONNE PAS SUR LES ADDs DE TWITTER !!!
         const url_tweet = getUrl(article.innerHTML);
+        console.log(signalTweet(url_tweet,"politique","a"))
         // Change l'aspect visuel des tweets
         // distance x - distance y - dégradé - taille - (couleur r,g,b, transparence) - inset ou non
         // article.style.boxShadow = "none"; fait bugger
@@ -208,10 +262,6 @@ async function getTypeTweet(url_tweet){
 }
 
 
-async function signalTweet(url_tweet,sujet,description){
-    let url = "http://localhost:8081/tweet/signalement/level"
-
-}
 
 async function getUserStatusTweet(url_tweet){
     // /tweet/signalement/level

@@ -1,5 +1,7 @@
 
-exports.signalTweet = async (url_tweet) =>{
+
+
+export async function trouveEtatTweetParUrl (url_tweet)  {
     let url_api_request = "http://localhost:8081/tweet/find/etat/tweet/by/url"
 
     let response = await fetch(url_api_request, {
@@ -23,7 +25,7 @@ exports.signalTweet = async (url_tweet) =>{
     return (response)
 }
 
-exports.signalTweet = async (url_tweet,sujet_signalement,description_signalement) =>{
+export async function signalTweet (url_tweet,sujet_signalement,description_signalement){
     let url_api_request = "http://localhost:8081/tweet/signale/tweet"
 
     let response = await fetch(url_api_request, {
@@ -33,7 +35,7 @@ exports.signalTweet = async (url_tweet,sujet_signalement,description_signalement
                 'Content-Type': 'application/json'
                 //Origin: origin
             },
-            body: JSON.stringify({
+            body: ({
                 url:url_tweet,
                 sujet:sujet_signalement,
                 description:description_signalement,

@@ -74,10 +74,10 @@ function respondStatus(url){
 }
 
 function getReportLevel(urlRechercher){
-    for (let i = 0; i < array.length; i++) {
-        // console.log(array[i])
-        if (array[i][0].localeCompare(urlRechercher) === 0) return array[i][1]
-    }
+    // for (let i = 0; i < array.length; i++) {
+    //     // console.log(array[i])
+    //     if (array[i][0].localeCompare(urlRechercher) === 0) return array[i][1]
+    // }
     // if (signalement[0].localeCompare(urlRechercher) === 0) return signalement[1]
 
     console.log("n'est pas passé dans ")
@@ -107,12 +107,12 @@ function augmenteLvlSignalement(urlImpacter){
 
 app.post("/tweet/signalement/level",(req, res) => {
     const { url } = req.body;
-    // console.log(url);
+    console.log(url);
     if (!url){
         res.status(413).send({data:"no url"});
     }
 
-    console.table(array)
+    // console.table(array)
 
     let niveauSignalementTweet = getReportLevel(url);
     // console.log("getReportLevel(url) : "+getReportLevel(url) )
@@ -131,7 +131,7 @@ app.post("/tweet/signalement/augmente",(req, res) => {
         res.status(413).send({data:"no url"});
     }
 
-    console.table(array)
+    // console.table(array)
 
     let etatRetourFonction = augmenteLvlSignalement(url);
     let niveauSignalementTweet = getReportLevel(url);
