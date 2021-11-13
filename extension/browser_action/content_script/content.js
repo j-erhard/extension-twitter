@@ -206,6 +206,11 @@ async function getTypeTweet(url_tweet){
 }
 
 
+async function signalTweet(url_tweet,sujet,description){
+    let url = "http://localhost:8081/tweet/signalement/level"
+
+}
+
 async function getUserStatusTweet(url_tweet){
     // /tweet/signalement/level
     let url = "http://localhost:8081/tweet/signalement/level"
