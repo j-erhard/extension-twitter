@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS jugements;
 
 CREATE TABLE jugements (
     id              INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-    decision        ENUM('vrai', 'faux', 'tendancieux', 'pas d\'information') NOT NULL,
+    decision        ENUM('vrai', 'faux', 'tendancieux', 'no information') NOT NULL,
     description     LONGTEXT
 );
 
@@ -38,7 +38,7 @@ CREATE TABLE bannissements (
 CREATE TABLE tweets (
     id              INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     url             VARCHAR(150) UNIQUE,
-    etat            ENUM('signalement', 'vrai', 'faux', 'tendancieux', 'pas d\'information') NOT NULL
+    etat            ENUM('signalement', 'vrai', 'faux', 'tendancieux', 'no information') NOT NULL
 );
 
 CREATE TABLE signalements (

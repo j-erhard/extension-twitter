@@ -1,9 +1,23 @@
-const express = require ('express');
+const express = require("express");
 const app = express();
-const PORT = 8081;
-let array = [["https://twitter.com/adamwathan/status/1449372741505798151",1],["zeojf",2]];
+//later
+const bodyParser = require("body-parser");
+const port=8081;
+const tweetRoute = require("./routes/tweets.routes");
+// const customerRoute = require("./routes/customers.routes");
+// const employeeRoute = require("./routes/employees.routes");
+// const officeRoute = require("./routes/offices.routes");
+// const orderRoute = require("./routes/orders.routes");
+// const orderdetailsRoute = require("./routes/orderdetails.routes");
+// const productRoute = require("./routes/product.routes");
+// const productlinesRoute = require("./routes/productlines.routes");
+// const paymentRoute = require("./routes/payments.routes");
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
 
-app.use(express.static('.'))
+
+
+//enable CORS
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -11,14 +25,45 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Credentials", "true");
     next();
 });
-app.use(express.json());
+
+
+app.use(bodyParser.json());
+app.use("/tweet",tweetRoute);
+// app.use("/employee",employeeRoute);
+// app.use("/office",officeRoute);
+// app.use("/order",orderRoute);
+// app.use("/orderdetail",orderdetailsRoute);
+// app.use("/productline",productlinesRoute);
+// app.use("/product",productRoute);
+// app.use("/payment",paymentRoute);
+
+// SWAGGER START
+const swaggerOption = {
+    swaggerDefinition : (swaggerJsdoc.Options={
+        info:{
+            title: "TP5 MYSQL EXPRESS REST",
+            description: "API Documentation",
+            contact: {
+                name:"Antoine JEAN",
+            },
+            servers:["http://localhost:8081"],
+        }
+    }),
+    apis: ["index.js","./routes/*.js"],
+};
+
+const swaggerDocs = swaggerJsdoc(swaggerOption);
+app.use("/api-docs",swaggerUi.serve,swaggerUi.setup(swaggerDocs));
+
+// SWAGGER END
+
+app.listen(port,()=>{
+    console.log(`Le serveur ecoute sur le port ${port}`);
+    console.log(`http://localhost:${port}`);
+});
 
 
 
-app.listen(
-    PORT,
-    () => console.log(`it's alive on http://localhost:${PORT}`)
-);
 
 function respondStatus(url){
     let lastIntUrl = url.slice(-1);
@@ -105,7 +150,7 @@ app.post("/tweet/signalement/augmente",(req, res) => {
 })
 
 app.post('/tweetStatus',(req, res) => {
-    console.log("start");
+    // console.log("start");
 
     const { url } = req.body;
     // console.log(url);

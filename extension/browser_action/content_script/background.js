@@ -17,5 +17,5 @@ chrome.browserAction.onClicked.addListener(function (tab) {
         chrome.tabs.sendMessage(tabs[0].id, {type: "popup-modal"});
     });
 })
- */
+*/
 
