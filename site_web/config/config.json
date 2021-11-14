@@ -1,0 +1,11 @@
+{
+  "development": {
+    "username": "celia", "password": "03092002", "database": "bdd_extension", "host": "localhost", "dialect": "mysql", "define": {
+      "timestamps": false }
+  }, "test": {
+  "username": "", "password": null, "database": "", "host": "", "dialect": "mysql", "define": {
+    "timestamps": false }
+}, "production": {
+  "username": "", "password": null, "database": "", "host": "127.0.0.1", "dialect": "mysql", "define": {
+    "timestamps": false }
+} }
