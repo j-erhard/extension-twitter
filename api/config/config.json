@@ -1,23 +1,22 @@
 {
   "development": {
-    "username": "login",
-    "password": "motdepasse",
+    "username": "celia",
+    "password": "03092002",
     "database": "bdd_extension",
     "host": "localhost",
-    "dialect": "mysql",
-    "port": "8889"
+    "dialect": "mysql"
   },
   "test": {
-    "username": "login",
-    "password": "motdepasse",
-    "database": "companyDB",
+    "username": "celia",
+    "password": "03092002",
+    "database": "bdd_extension",
     "host": "localhost",
     "dialect": "mysql"
   },
   "production": {
-    "username": "login",
-    "password": "motdepasse",
-    "database": "companyDB",
+    "username": "celia",
+    "password": "03092002",
+    "database": "bdd_extension",
     "host": "localhost",
     "dialect": "mysql"
   }
