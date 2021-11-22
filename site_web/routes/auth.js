@@ -13,6 +13,9 @@ module.exports = function(app,passport){
     app.post('/signin', passport.authenticate('local-signin', { successRedirect: '/home',
         failureRedirect: '/signin'} ));
 
+    app.get('/TableDesQuetes', authController.quetes);
+    app.get('/Contact', authController.contact);
+
     function isLoggedIn(req, res, next) { if (req.isAuthenticated())
         return next(); res.redirect('/signin');
     } }

@@ -6,6 +6,11 @@ exports.signin = function(req, res) {
     res.render('signin');
 }
 
+exports.quetes = function(req,res){
+    res.render('TableDesQuetes'); }
+
+exports.contact = function(req,res){
+    res.render('Contact'); }
 
 exports.home = function(req,res){
     res.render('home'); }
