@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html> <head>
-    <title>Connexion</title> </head>
-<body>
-<form id="signin" name="signin" method="post" action="signin">
-    <label for="email">Email</label>
-    <input class="text" name="email" type="text" /> <label for="password">Mot de passe</label>
-    <input name="password" type="password" /> <input class="btn" type="submit" value="Sign In" />
-</form> </body>
+<html>
+<head>
+    <title>Connexion</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="styleCss.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-r from-indigo-900 via-blue-900 via-blue-700 to-blue-500 ...">
+<div class="container">
+    <div class="item-2">
+        <img src="login3.jpg">
+    </div>
+    <div class="item-1">
+        <h1 class="font-bold"> Connexion utilisateur </h1>
+        <br>
+        <br>
+        <form id="signin" name="signin" method="post" action="signin">
+            <label for="email">Adresse mail</label>
+            <br>
+            <input class="text" name="email" type="text" />
+            <br>
+            <br>
+            <label for="password">Mot de passe</label>
+            <br>
+            <input name="password" type="password" />
+            <br>
+            <br>
+            <input class="btnLogin" type="submit" value="Se connecter" />
+            <br>
+            <a class="underline text-blue-500" href="signup"> Vous n'avez pas de compte ? Inscrivez-vous </a>
+        </form>
+    </div>
+</div>
+
+</body>
 </html>

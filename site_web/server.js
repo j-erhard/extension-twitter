@@ -3,6 +3,7 @@ const app = express();
 const passport = require('passport');
 const session = require('express-session');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 //DOTENV
 const dotenv = require("dotenv");
@@ -19,18 +20,22 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //VIEW HBS
-app.set('views', './views');
-app.set('view engine', '.hbs'); app.engine(
-    'hbs', exphbs({
-        extname: ".hbs", defaultLayout: "", layoutsDir: "",
-    }) );
+app.engine('.hbs', exphbs({
+    extname: '.hbs',
+    defaultLayout: ''
+}));
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "hbs");
+app.use(express.static(path.join(__dirname, "public")));
 
-app.get('/', function(req, res) {
-    res.send('Pour se connecter utiliser /signin et pour sincrire utiliser /signup ou /home');});
+
+app.get('/',function(req,res) {
+    res.render('signin.hbs');
+});
 
 //MODELS
 const models = require("./models");
-const {signup} = require("./controllers/authcontroller");
+const {signup, home} = require("./controllers/authcontroller");
 
 //ROUTES
 const authRoute = require('./routes/auth.js')(app,passport);
@@ -42,6 +47,19 @@ models.sequelize.sync().then(function() {
 console.log('La BDD fonctionne correctement') }).catch(function(err) {
     console.log(err, "Problème avec la MAJ de la BDD")
 });
+
+// tailwind.config.js
+const defaultTheme = require('tailwindcss/defaultTheme');
+
+module.exports = {
+    theme: {
+        extend: {
+            fontFamily: {
+                sans: ['Inter var', ...defaultTheme.fontFamily.sans],
+            },
+        },
+    },
+}
 
 const port = 3000;
 app.listen(port,function(err){
