@@ -23,7 +23,7 @@ exports.signaleTweet = async (req,res) =>{
     tweets.findAll({
         where:{url:req.body.url},
     }).then( async tweet => {
-        console.log(tweet)
+        // console.log(tweet)
         // test qui retourne vrai si aucun tweet trouvé
         if (tweet && Object.keys(tweet).length === 0) {
             // cas où le tweet n'est pas dans la base de données
@@ -68,3 +68,19 @@ exports.signaleTweet = async (req,res) =>{
 }
 
 
+exports.signalementLevel = (req,res) =>{
+    tweets.findAll({
+        where:{url:req.body.url},
+        attributes:['niveau_signalement']
+    }).then(result => {
+        // console.log(result)
+        if (result && Object.keys(result).length === 0) result = [{"niveau_signalement":"0"}]
+            return res.status(200).send({
+                success:1,
+                result
+            });
+        }).catch(err => {
+        console.log(err);
+        return res.status(400).send({success:0,data:"Bad request"});
+    });
+}

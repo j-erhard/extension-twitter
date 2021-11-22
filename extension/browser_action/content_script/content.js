@@ -2,9 +2,103 @@
 //"matches": ["<all_urls>"],
 
 
+/***************************************************************
+ *                   Récupération de données                   *
+ ***************************************************************/
+
+// return un objet Json | si tu le mets dans une variable tu peut enssuite
+// récupérer l'url en faisant un res.body.tweetStatus ou un truc du genre
+// res = signaleTweet(url)
+// res.body.tweetStatus
+
+// ancienne fonction
+async function getTypeTweet(url_tweet){
+    let url = "http://localhost:8081/tweetStatus"
+
+    let response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                //Origin: origin
+            },
+            body: JSON.stringify({
+                url:url_tweet
+            })
+
+        },
+        {mode: 'cors'})
+        .then(result => result.json())
+        .then(data => {
+            // console.log(data.tweetStatus);
+            return data;
+        });
+    // if HTTP-status is 200-299
+    // get the response body
+    // console.log(JSON.stringify(response.tweetStatus))
+    // console.log((response.tweetStatus))
+    return (response.tweetStatus)
+
+}
+
+
+// ancienne fonction
+async function getUserStatusTweet(url_tweet){
+    // /tweet/signalement/level
+    let url = "http://localhost:8081/tweet/signalement/level"
+
+    let response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                //Origin: origin
+            },
+            body: JSON.stringify({
+                url:url_tweet
+            })
+
+        },
+        {mode: 'cors'})
+        .then(result => result.json())
+        .then(data => {
+            // console.log(data.tweetStatus);
+            return data;
+        });
+    // if HTTP-status is 200-299
+    // get the response body
+    // console.log(JSON.stringify(response.tweetStatus))
+    // console.log((response.tweetStatus))
+    return (response.reportLvl)
+}
+
+// ancienne fonction
+async function upgradeUserStatusTweet(url_tweet){
+    let url = "http://localhost:8081/tweet/signalement/augmente"
+    let response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                //Origin: origin
+            },
+            body: JSON.stringify({
+                url:url_tweet
+            })
+
+        },
+        {mode: 'cors'})
+        .then(result => result.json())
+        .then(data => {
+            // console.log(data.tweetStatus);
+            return data;
+        });
+
+    return (response.message)
+}
 
 async function trouveEtatTweetParUrl (url_tweet)  {
-    let url_api_request = "http://localhost:8081/tweet/find/etat/tweet/by/url"
+    let url_api_request = "http://localhost:8081/findEtatTweetByUrl"
 
     let response = await fetch(url_api_request, {
             method: 'get',
@@ -28,11 +122,11 @@ async function trouveEtatTweetParUrl (url_tweet)  {
 }
 
 async function signalTweet (url_tweet,sujet_signalement,description_signalement){
-    let url_api_request = "http://localhost:8081/tweet/signale/tweet"
+    let url_api_request = "http://localhost:8081/tweet/signaleTweet"
 
-    console.log(url_tweet)
-    console.log(sujet_signalement)
-    console.log(description_signalement)
+    // console.log(url_tweet)
+    // console.log(sujet_signalement)
+    // console.log(description_signalement)
     let response = await fetch(url_api_request, {
             method: 'post',
             headers: {
@@ -55,6 +149,43 @@ async function signalTweet (url_tweet,sujet_signalement,description_signalement)
 
     return (response)
 }
+
+async function getReportLevelOfTweet(url_tweet){
+    // /tweet/signalement/level
+    let url = "http://localhost:8081/tweet/signalementLevel"
+
+    let nvSignalement = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                //Origin: origin
+            },
+            body: JSON.stringify({
+                url:url_tweet
+            })
+
+        },
+        {mode: 'cors'})
+        .then(result => result.json())
+        .then(data => {
+            // console.log(data.tweetStatus);
+            // console.log("oui c'est clair")
+            // console.log(url_tweet)
+            // console.log(data)
+            // console.log(data["result"]["0"].niveau_signalement)
+            // // console.log(data.result.0.niveau_signalemen)
+            // console.log("non")
+            return data["result"]["0"].niveau_signalement;
+        });
+    // if HTTP-status is 200-299
+    // get the response body
+    // console.log(JSON.stringify(response.tweetStatus))
+    // console.log((response.tweetStatus))
+    return (nvSignalement)
+}
+
+
 
 /**
  * Fonction qui affiche les tweets vérifiée dès leurs chargements
@@ -94,7 +225,7 @@ async function affichageTweets(){
     for (const article of articles) {
         // récupère l'url    !!!!! NE FONCTIONNE PAS SUR LES ADDs DE TWITTER !!!
         const url_tweet = getUrl(article.innerHTML);
-        console.log(signalTweet(url_tweet,"politique","a"))
+        // console.log(signalTweet(url_tweet,"politique","a"))
         // Change l'aspect visuel des tweets
         // distance x - distance y - dégradé - taille - (couleur r,g,b, transparence) - inset ou non
         // article.style.boxShadow = "none"; fait bugger
@@ -177,11 +308,10 @@ async function ajoutBouton(article, url_tweet, statusTweet) {
             bouton_report.innerHTML = "signaler";
             bouton_report.style.backgroundColor = "#0093f5";
             bouton_report.onclick = function () {
-                upgradeUserStatusTweet(url_tweet);
                 bouton_report.innerHTML = "ajouter info";
                 bouton_report.style.backgroundColor = "#f56e00";
                 bouton_report.onclick = function () {
-                    upgradeUserStatusTweet(url_tweet);
+                    getReportLevelOfTweet(url_tweet);
                     ajoutBouton(article, url_tweet, statusTweet);
                     showModal();
                 };
@@ -191,11 +321,11 @@ async function ajoutBouton(article, url_tweet, statusTweet) {
             bouton_report.innerHTML = "ajouter info";
             bouton_report.style.backgroundColor = "#f56e00";
             bouton_report.onclick = function () {
-                upgradeUserStatusTweet(url_tweet);
+                getReportLevelOfTweet(url_tweet);
                 bouton_report.innerHTML = "+ d'info";
                 bouton_report.style.backgroundColor = "#3541ff";
                 bouton_report.onclick = function () {
-                    upgradeUserStatusTweet(url_tweet);
+                    getReportLevelOfTweet(url_tweet);
                 };
             };
             break;
@@ -203,7 +333,7 @@ async function ajoutBouton(article, url_tweet, statusTweet) {
             bouton_report.innerHTML = "+ d'info";
             bouton_report.style.backgroundColor = "#3541ff";
             bouton_report.onclick = function () {
-                upgradeUserStatusTweet(url_tweet);
+                getReportLevelOfTweet(url_tweet);
             };
             break;
         default:
@@ -224,97 +354,6 @@ window.addEventListener('scroll', function(){
         await affichageTweets();
     }, 100);
 });
-/***************************************************************
- *                   Récupération de données                   *
- ***************************************************************/
-
-// return un objet Json | si tu le mets dans une variable tu peut enssuite
-// récupérer l'url en faisant un res.body.tweetStatus ou un truc du genre
-// res = signaleTweet(url)
-// res.body.tweetStatus
-async function getTypeTweet(url_tweet){
-    let url = "http://localhost:8081/tweetStatus"
-
-    let response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                //Origin: origin
-            },
-            body: JSON.stringify({
-                url:url_tweet
-            })
-
-        },
-        {mode: 'cors'})
-        .then(result => result.json())
-        .then(data => {
-            // console.log(data.tweetStatus);
-            return data;
-        });
-    // if HTTP-status is 200-299
-    // get the response body
-    // console.log(JSON.stringify(response.tweetStatus))
-    // console.log((response.tweetStatus))
-    return (response.tweetStatus)
-
-}
-
-
-
-async function getUserStatusTweet(url_tweet){
-    // /tweet/signalement/level
-    let url = "http://localhost:8081/tweet/signalement/level"
-
-    let response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                //Origin: origin
-            },
-            body: JSON.stringify({
-                url:url_tweet
-            })
-
-        },
-        {mode: 'cors'})
-        .then(result => result.json())
-        .then(data => {
-            // console.log(data.tweetStatus);
-            return data;
-        });
-    // if HTTP-status is 200-299
-    // get the response body
-    // console.log(JSON.stringify(response.tweetStatus))
-    // console.log((response.tweetStatus))
-    return (response.reportLvl)
-}
-
-async function upgradeUserStatusTweet(url_tweet){
-    let url = "http://localhost:8081/tweet/signalement/augmente"
-    let response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                //Origin: origin
-            },
-            body: JSON.stringify({
-                url:url_tweet
-            })
-
-        },
-        {mode: 'cors'})
-        .then(result => result.json())
-        .then(data => {
-            // console.log(data.tweetStatus);
-            return data;
-        });
-
-    return (response.message)
-}
 
 
 const showModal =()=>{

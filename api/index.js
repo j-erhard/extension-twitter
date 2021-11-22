@@ -4,6 +4,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const port=8081;
 const tweetRoute = require("./routes/tweets.routes");
+const siteWebRoute = require("./routes/siteWeb.routes");
 // const customerRoute = require("./routes/customers.routes");
 // const employeeRoute = require("./routes/employees.routes");
 // const officeRoute = require("./routes/offices.routes");
@@ -29,6 +30,7 @@ app.use(function(req, res, next) {
 
 app.use(bodyParser.json());
 app.use("/tweet",tweetRoute);
+app.use("/siteWeb",siteWebRoute);
 // app.use("/employee",employeeRoute);
 // app.use("/office",officeRoute);
 // app.use("/order",orderRoute);
@@ -80,7 +82,7 @@ function getReportLevel(urlRechercher){
     // }
     // if (signalement[0].localeCompare(urlRechercher) === 0) return signalement[1]
 
-    console.log("n'est pas passé dans ")
+    // console.log("n'est pas passé dans ")
     return 0
 }
 
@@ -107,7 +109,7 @@ function augmenteLvlSignalement(urlImpacter){
 
 app.post("/tweet/signalement/level",(req, res) => {
     const { url } = req.body;
-    console.log(url);
+    // console.log(url);
     if (!url){
         res.status(413).send({data:"no url"});
     }

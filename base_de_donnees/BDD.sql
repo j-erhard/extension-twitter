@@ -39,7 +39,7 @@ CREATE TABLE tweets (
     id              INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     url             VARCHAR(150) UNIQUE,
     etat            ENUM('signalement', 'vrai', 'faux', 'tendancieux', 'no information') NOT NULL,
-    niveau_signalement INT DEFAULT 0
+    niveau_signalement INT DEFAULT 1
 );
 
 CREATE TABLE signalements (
@@ -64,21 +64,21 @@ CREATE TABLE verifie (
 #     INSERTIONS de quelques valeurs pour faire des tests     #
 ###############################################################
 
-#INSERT INTO jugements (decision, description) VALUES
-#('vrai', 'Les belges n\'ont pas d\'étoiles sur leurs maillots'),
-#('pas d\'information', 'Ce tweet ne contient pas de mauvaises informations')
-#;
-#INSERT INTO utilisateurs (prenom, nom, email, password, type) VALUES
-#('julien', 'erhard', 'julien.erhard@edu.univ-fcomte.fr', 'MDP', 'admin'),
-#('michel', 'schmitt', 'mich.schmi@edu.univ-fcomte.fr', 'MDP', 'vérificateur')
-#;
-#INSERT INTO bannissements (idUtilisateur, raison, DateBan, Duree) VALUES
-#(2, 'faux compte vérificateur', DATE(NOW()), 9999)
-#;
-#INSERT INTO tweets (url, etat) VALUES
-#('https://twitter.com/Visa_Fr/status/14501268814461050920', 'signalement'),
-#('https://twitter.com/LaPosteBusiness/status/1438877884853231618', 'signalement')
-#;
+INSERT INTO jugements (decision, description) VALUES
+('vrai', 'Les belges n\'ont pas d\'étoiles sur leurs maillots'),
+('pas d\'information', 'Ce tweet ne contient pas de mauvaises informations')
+;
+INSERT INTO utilisateurs (prenom, nom, email, password, type) VALUES
+('julien', 'erhard', 'julien.erhard@edu.univ-fcomte.fr', 'MDP', 'admin'),
+('michel', 'schmitt', 'mich.schmi@edu.univ-fcomte.fr', 'MDP', 'vérificateur')
+;
+INSERT INTO bannissements (idUtilisateur, raison, DateBan, Duree) VALUES
+(2, 'faux compte vérificateur', DATE(NOW()), 9999)
+;
+INSERT INTO tweets (url, etat) VALUES
+('https://twitter.com/Visa_Fr/status/14501268814461050920', 'signalement'),
+('https://twitter.com/LaPosteBusiness/status/1438877884853231618', 'signalement')
+;
 
 
 ###############################################################

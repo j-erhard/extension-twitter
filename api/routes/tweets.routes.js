@@ -32,7 +32,7 @@ let router = express.Router();
 
 /**
  * @swagger
- * /tweet/find/etat/tweet/by/url:
+ * /tweet/findEtatTweetByUrl:
  *   get:
  *      description: Used to get a customer's info
  *      tags:
@@ -42,7 +42,7 @@ let router = express.Router();
  *            name: url
  *            type: string
  *            required: true
- *            value: https://twitter.com/exemple/010203
+ *            value: https://twitter.com/Visa_Fr/status/14501268814461050920
  *      responses:
  *          '200':
  *              description: Resource returned successfully
@@ -51,12 +51,12 @@ let router = express.Router();
  *          '400':
  *              description: Bad request
  */
-router.get("/find/etat/tweet/by/url", tweetController.findEtatTweetByUrl)
+router.get("/findEtatTweetByUrl", tweetController.findEtatTweetByUrl)
 
 
 /**
  * @swagger
- * /tweet/signale/tweet:
+ * /tweet/signaleTweet:
  *   post:
  *      description:
  *      tags:
@@ -88,6 +88,36 @@ router.get("/find/etat/tweet/by/url", tweetController.findEtatTweetByUrl)
  *          '400':
  *              description: Bad request
  */
-router.post("/signale/tweet", tweetController.signaleTweet)
+router.post("/signaleTweet", tweetController.signaleTweet)
+
+/**
+ * @swagger
+ * /tweet/signalementLevel:
+ *   post:
+ *      description:
+ *      tags:
+ *          - tweet
+ *      parameters:
+ *          - in: body
+ *            name: tweet
+ *            description: User data
+ *            schema:
+ *              type: object
+ *              required:
+ *                 - url
+ *              properties:
+ *                 url:
+ *                      type: int
+ *                      maxLength: 150
+ *                      example: https://twitter.com/Visa_Fr/status/14501268814461050920
+ *      responses:
+ *          '200':
+ *              description: Resource added successfully
+ *          '500':
+ *              description: Internal server error
+ *          '400':
+ *              description: Bad request
+ */
+router.post("/signalementLevel", tweetController.signalementLevel)
 
 module.exports = router;

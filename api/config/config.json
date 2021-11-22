@@ -1,10 +1,11 @@
 {
   "development": {
-    "username": "celia",
-    "password": "03092002",
+    "username": "login",
+    "password": "motdepasse",
     "database": "bdd_extension",
     "host": "localhost",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "port": 8889
   },
   "test": {
     "username": "celia",

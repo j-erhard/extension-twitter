@@ -15,6 +15,11 @@ module.exports = function(sequelize, DataTypes) {
     etat: {
       type: DataTypes.ENUM('signalement','vrai','faux','tendancieux','no information'),
       allowNull: false
+    },
+    niveau_signalement: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 1
     }
   }, {
     sequelize,

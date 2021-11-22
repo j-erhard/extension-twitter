@@ -26,7 +26,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     type: {
       type: DataTypes.ENUM('admin','verificateur','visiteur'),
-      allowNull: false
+      allowNull: false,
+      defaultValue: "visiteur"
     }
   }, {
     sequelize,
