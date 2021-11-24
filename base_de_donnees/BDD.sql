@@ -66,7 +66,7 @@ CREATE TABLE verifie (
 
 INSERT INTO jugements (decision, description) VALUES
 ('vrai', 'Les belges n\'ont pas d\'étoiles sur leurs maillots'),
-('pas d\'information', 'Ce tweet ne contient pas de mauvaises informations')
+('no information', 'Ce tweet ne contient pas de mauvaises informations')
 ;
 INSERT INTO utilisateurs (prenom, nom, email, password, type) VALUES
 ('julien', 'erhard', 'julien.erhard@edu.univ-fcomte.fr', 'MDP', 'admin'),
