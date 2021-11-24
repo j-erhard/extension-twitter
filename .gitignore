@@ -3,8 +3,8 @@
 api/node_modules/*
 site_web/node_modules
 
-
+./**/*.json
 ./site_web/config/config.json
 ./api/config/config.json
-
+.DS_Store
 
