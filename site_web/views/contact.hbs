@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Connexion</title>
+    <title>Contact</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="styleCss.css" rel="stylesheet">
     <link href="styleTableQuete.css" rel="stylesheet">
 </head>
-<body onload="ajouteTab()">
+<body>
 <!-- Navbar goes here -->
 <nav class="bg-gray-700 shadow-lg">
     <div class="max-w-6xl mx-auto px-4">
@@ -21,12 +21,12 @@
                 <!-- Primary Navbar items -->
                 <div class="hidden md:flex items-center space-x-1">
                     <a href="/home" class="py-4 px-2 text-gray-500 font-semibold hover:text-white transition duration-300">Accueil</a>
-                    <a href="/tableDesQuetes" class="py-4 px-2 text-white border-b-4 border-white font-semibold ">Table des requêtes</a>
-                    <a href="/contact" class="py-4 px-2 text-gray-500 font-semibold hover:text-white transition duration-300">Contact</a>
+                    <a href="/tableDesQuetes" class="py-4 px-2 text-gray-500 font-semibold hover:text-white transition duration-300">Table des requêtes</a>
+                    <a href="/contact" class="py-4 px-2 text-white border-b-4 border-white font-semibold ">Contact</a>
                 </div>
             </div>
             <!-- Secondary Navbar items -->
-            <div claconsole.error(err);ss="hidden md:flex items-center space-x-3 ">
+            <div class="hidden md:flex items-center space-x-3 ">
                 <a href="/logout" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-700 hover:bg-white mt-4 lg:mt-0">Logout</a>
             </div>
             <!-- Mobile menu button -->
@@ -68,91 +68,16 @@
 
 
 
-
-
-<script type="text/javascript">
-    function getReportedTweet() {
-
-        const data = JSON.stringify({
-            "url": "https://twitter.com/matthew_d_green/status/1446888859464257539"
-        });
-
-        const xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
-
-        xhr.addEventListener("readystatechange", function () {
-            if (this.readyState === this.DONE) {
-                console.log(this.responseText);
-            }
-        });
-
-        xhr.open("POST", "http://localhost:8081/getTypeTweet");
-        xhr.setRequestHeader("Content-Type", "application/json");
-
-        xhr.send(data);
-    }
-
-    function ajouteTab() {
-        const tableau = document.getElementById("tableau");
-        for (let i = 0; i < 11; i++) {
-            const tr = document.createElement("tr");
-            tr.setAttribute("class", "text-gray-700");
-
-            const th1 = document.createElement("th");
-            th1.setAttribute("class", "px-4 py-3 text-ms border");
-            th1.innerHTML = "Julien" + i;
-
-            const th2 = document.createElement("th");
-            th2.setAttribute("class", "px-8 py-3 text-ms font-light border");
-            th2.innerHTML = "Voici un tweet\nIl est très long\nFin";
-
-            const th3 = document.createElement("th");
-            th3.setAttribute("class", "px-8 py-3 text-ms font-light border");
-            th3.innerHTML = "" + i*3;
-
-            const th4 = document.createElement("th");
-            th4.setAttribute("class", "px-2 py-1 text-sm border");
-            const btn = document.createElement("button");
-            btn.setAttribute("class", "px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none");
-            btn.innerHTML = "Vérifier";
-            th4.appendChild(btn);
-
-            tr.appendChild(th1);
-            tr.appendChild(th2);
-            tr.appendChild(th3);
-            tr.appendChild(th4);
-            tableau.appendChild(tr);
-        }
-    }
-</script>
+<!---------------------------------------------------
+            TON CODE
 
 
 
-<!-- component -->
-<section class="container mx-auto p-6 font-mono">
-    <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
-        <div class="w-full overflow-x-auto">
-            <table class="w-full">
-                <thead>
-                <tr class="text-md font-semibold tracking-wide text-center text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
-                    <th class="px-4 py-3">Utilisateur</th>
-                    <th class="px-10 py-3">Tweet</th>
-                    <th class="px-2 py-3">Nombre de signalement</th>
-                    <th class="px-2 py-">Actions</th>
-                </tr>
-                </thead>
-                <tbody id="tableau" class="bg-white">
-                <tr class="text-gray-700">
-                    <!--                            <td class="px-4 py-3 text-ms border">Julien</td>-->
-                    <!--                            <td class="px-8 py-3 text-ms font-semibold border">Tweet</td>-->
-                    <!--                            <td class="px-4 py-3 text-xs border">5</td>-->
-                    <!--                            <td class="px-2 py-1 text-sm border"><button class="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">Vérifier</button></td>-->
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</section>
+
+
+            ------------------>
+
+
 
 <!-- component -->
 <footer class="footer bg-gray-700 relative pt-1">
