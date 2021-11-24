@@ -5,5 +5,6 @@ site_web/node_modules
 site_web/package.json
 site_web/package-lock.json
 site_web/config/config.json
+./api/config/
 
-api/config/config.json
+
