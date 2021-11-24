@@ -6,146 +6,185 @@
     <link href="styleCss.css" rel="stylesheet">
     <link href="styleTableQuete.css" rel="stylesheet">
 </head>
-<body>
-    <!-- Navbar goes here -->
-    <nav class="bg-gray-700 shadow-lg">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="flex justify-between">
-                <div class="flex space-x-7">
-                    <!-- Website Logo -->
-                    <!--<div>
-                        <a href="#" class="flex items-center py-4 px-2">
-                            <span class="font-semibold text-gray-500 text-lg">Accueil</span>
-                        </a>
-                    </div>-->
-                    <!-- Primary Navbar items -->
-                    <div class="hidden md:flex items-center space-x-1">
-                        <a href="/home" class="py-4 px-2 text-gray-500 font-semibold hover:text-white transition duration-300">Accueil</a>
-                        <a href="/tableDesQuetes" class="py-4 px-2 text-white border-b-4 border-white font-semibold ">Table des requêtes</a>
-                        <a href="/contact" class="py-4 px-2 text-gray-500 font-semibold hover:text-white transition duration-300">Contact</a>
-                    </div>
+<body onload="ajouteTab()">
+<!-- Navbar goes here -->
+<nav class="bg-gray-700 shadow-lg">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="flex justify-between">
+            <div class="flex space-x-7">
+                <!-- Website Logo -->
+                <!--<div>
+                    <a href="#" class="flex items-center py-4 px-2">
+                        <span class="font-semibold text-gray-500 text-lg">Accueil</span>
+                    </a>
+                </div>-->
+                <!-- Primary Navbar items -->
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="/home" class="py-4 px-2 text-gray-500 font-semibold hover:text-white transition duration-300">Accueil</a>
+                    <a href="/tableDesQuetes" class="py-4 px-2 text-white border-b-4 border-white font-semibold ">Table des requêtes</a>
+                    <a href="/contact" class="py-4 px-2 text-gray-500 font-semibold hover:text-white transition duration-300">Contact</a>
                 </div>
-                <!-- Secondary Navbar items -->
-                <div class="hidden md:flex items-center space-x-3 ">
-                    <a href="/logout" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-700 hover:bg-white mt-4 lg:mt-0">Logout</a>
+            </div>
+            <!-- Secondary Navbar items -->
+            <div claconsole.error(err);ss="hidden md:flex items-center space-x-3 ">
+                <a href="/logout" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-gray-700 hover:bg-white mt-4 lg:mt-0">Logout</a>
+            </div>
+            <!-- Mobile menu button -->
+            <div class="md:hidden flex items-center">
+                <button class="outline-none mobile-menu-button">
+                    <svg class=" w-6 h-6 text-gray-500 hover:text-green-500 "
+                         x-show="!showMenu"
+                         fill="none"
+                         stroke-linecap="round"
+                         stroke-linejoin="round"
+                         stroke-width="2"
+                         viewBox="0 0 24 24"
+                         stroke="currentColor"
+                    >
+                        <path d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- mobile menu -->
+    <div class="hidden mobile-menu">
+        <ul class="">
+            <li class="active"><a href="index.html" class="block text-sm px-2 py-4 text-white bg-green-500 font-semibold">Accueil</a></li>
+            <li><a href="#services" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Table des requêtes</a></li>
+            <li><a href="#about" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Contact</a></li>
+        </ul>
+    </div>
+    <script>
+        const btn = document.querySelector("button.mobile-menu-button");
+        const menu = document.querySelector(".mobile-menu");
+
+        btn.addEventListener("click", () => {
+            menu.classList.toggle("hidden");
+        });
+    </script>
+</nav>
+
+
+
+
+
+
+<script type="text/javascript">
+    function getReportedTweet() {
+
+        const data = JSON.stringify({
+            "url": "https://twitter.com/matthew_d_green/status/1446888859464257539"
+        });
+
+        const xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState === this.DONE) {
+                console.log(this.responseText);
+            }
+        });
+
+        xhr.open("POST", "http://localhost:8081/getTypeTweet");
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.send(data);
+    }
+
+    function ajouteTab() {
+        const tableau = document.getElementById("tableau");
+        for (let i = 0; i < 11; i++) {
+            const tr = document.createElement("tr");
+            tr.setAttribute("class", "text-gray-700");
+
+            const th1 = document.createElement("th");
+            th1.setAttribute("class", "px-4 py-3 text-ms border");
+            th1.innerHTML = "Julien" + i;
+
+            const th2 = document.createElement("th");
+            th2.setAttribute("class", "px-8 py-3 text-ms font-light border");
+            th2.innerHTML = "Voici un tweet\nIl est très long\nFin";
+
+            const th3 = document.createElement("th");
+            th3.setAttribute("class", "px-8 py-3 text-ms font-light border");
+            th3.innerHTML = "" + i*3;
+
+            const th4 = document.createElement("th");
+            th4.setAttribute("class", "px-2 py-1 text-sm border");
+            const btn = document.createElement("button");
+            btn.setAttribute("class", "px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none");
+            btn.innerHTML = "Vérifier";
+            th4.appendChild(btn);
+
+            tr.appendChild(th1);
+            tr.appendChild(th2);
+            tr.appendChild(th3);
+            tr.appendChild(th4);
+            tableau.appendChild(tr);
+        }
+    }
+</script>
+
+
+
+<!-- component -->
+<section class="container mx-auto p-6 font-mono">
+    <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
+        <div class="w-full overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                <tr class="text-md font-semibold tracking-wide text-center text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
+                    <th class="px-4 py-3">Utilisateur</th>
+                    <th class="px-10 py-3">Tweet</th>
+                    <th class="px-2 py-3">Nombre de signalement</th>
+                    <th class="px-2 py-">Actions</th>
+                </tr>
+                </thead>
+                <tbody id="tableau" class="bg-white">
+                <tr class="text-gray-700">
+                    <!--                            <td class="px-4 py-3 text-ms border">Julien</td>-->
+                    <!--                            <td class="px-8 py-3 text-ms font-semibold border">Tweet</td>-->
+                    <!--                            <td class="px-4 py-3 text-xs border">5</td>-->
+                    <!--                            <td class="px-2 py-1 text-sm border"><button class="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">Vérifier</button></td>-->
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- component -->
+<footer class="footer bg-gray-700 relative pt-1">
+    <div class="container mx-auto px-6">
+
+        <div class="sm:flex sm:mt-8">
+            <div class="mt-8 sm:mt-0 sm:w-full sm:px-8 flex flex-col md:flex-row justify-between">
+                <div class="flex flex-col">
+                    <span class="font-bold text-white uppercase mb-2">Accueil</span>
+                    <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500">link 1</a></span>
                 </div>
-                <!-- Mobile menu button -->
-                <div class="md:hidden flex items-center">
-                    <button class="outline-none mobile-menu-button">
-                        <svg class=" w-6 h-6 text-gray-500 hover:text-green-500 "
-                             x-show="!showMenu"
-                             fill="none"
-                             stroke-linecap="round"
-                             stroke-linejoin="round"
-                             stroke-width="2"
-                             viewBox="0 0 24 24"
-                             stroke="currentColor"
-                        >
-                            <path d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
+                <div class="flex flex-col">
+                    <span class="font-bold text-white uppercase mb-2">Contact</span>
+                    <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500">link 1</a></span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-bold text-white uppercase mb-2">Tables des quêtes</span>
+                    <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500">link 1</a></span>
                 </div>
             </div>
         </div>
-        <!-- mobile menu -->
-        <div class="hidden mobile-menu">
-            <ul class="">
-                <li class="active"><a href="index.html" class="block text-sm px-2 py-4 text-white bg-green-500 font-semibold">Accueil</a></li>
-                <li><a href="#services" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Table des requêtes</a></li>
-                <li><a href="#about" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Contact</a></li>
-            </ul>
-        </div>
-        <script>
-            const btn = document.querySelector("button.mobile-menu-button");
-            const menu = document.querySelector(".mobile-menu");
-
-            btn.addEventListener("click", () => {
-                menu.classList.toggle("hidden");
-            });
-        </script>
-    </nav>
-
-
-
-
-
-
-
-    <!-- component -->
-    <section class="container mx-auto p-6 font-mono">
-        <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
-            <div class="w-full overflow-x-auto">
-                <table class="w-full">
-                    <thead>
-                    <tr class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
-                        <th class="px-4 py-3">Utilisateur</th>
-                        <th class="px-4 py-3">Sujet</th>
-                        <th class="px-4 py-3">Nombre de signalement</th>
-                        <th class="px-4 py-3">Description</th>
-                        <th class="px-8 py-3">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody class="bg-white">
-                    <tr class="text-gray-700">
-                        <td class="px-4 py-3 border">
-                            <div class="flex items-center text-sm">
-                                <div class="relative w-8 h-8 mr-3 rounded-full md:block">
-                                    <img class="object-cover w-full h-full rounded-full" src="https://images.pexels.com/photos/5212324/pexels-photo-5212324.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="" loading="lazy" />
-                                    <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
-                                </div>
-                                <div>
-                                    <p class="font-semibold text-black">Sufyan</p>
-                                    <p class="text-xs text-gray-600">Developer</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-4 py-3 text-ms font-semibold border">22</td>
-                        <td class="px-4 py-3 text-xs border">
-                            <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm"> Acceptable </span>
-                        </td>
-                        <td class="px-4 py-3 text-sm border">6/4/2000</td>
-                        <td class="px-2 py-1 text-sm border">
-                            <button class="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">Vérifier</button>
-                        </td>
-                    </tr>
-
-                    </tbody>
-                </table>
+    </div>
+    <div class="container mx-auto px-6">
+        <div class="mt-8 border-t-2 border-white flex flex-col items-center">
+            <div class="sm:w-2/3 text-center py-6">
+                <p class="text-sm text-white font-bold mb-2">
+                    © 2021 by Antoine JEAN, Célia LEICHTNAM, Julien ERHARD, Guillaume KLEIN
+                </p>
             </div>
         </div>
-    </section>
-
-    <!-- component -->
-    <footer class="footer bg-gray-700 relative pt-1">
-        <div class="container mx-auto px-6">
-
-            <div class="sm:flex sm:mt-8">
-                <div class="mt-8 sm:mt-0 sm:w-full sm:px-8 flex flex-col md:flex-row justify-between">
-                    <div class="flex flex-col">
-                        <span class="font-bold text-white uppercase mb-2">Accueil</span>
-                        <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500">link 1</a></span>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="font-bold text-white uppercase mb-2">Contact</span>
-                        <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500">link 1</a></span>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="font-bold text-white uppercase mb-2">Tables des quêtes</span>
-                        <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500">link 1</a></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container mx-auto px-6">
-            <div class="mt-8 border-t-2 border-white flex flex-col items-center">
-                <div class="sm:w-2/3 text-center py-6">
-                    <p class="text-sm text-white font-bold mb-2">
-                        © 2021 by Antoine JEAN, Célia LEICHTNAM, Julien ERHARD, Guillaume KLEIN
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    </div>
+</footer>
 
 
 </body>
