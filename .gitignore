@@ -8,3 +8,5 @@ site_web/node_modules
 ./api/config/config.json
 .DS_Store
 
+/site_web/config/config.json
+/api/config/config.json
