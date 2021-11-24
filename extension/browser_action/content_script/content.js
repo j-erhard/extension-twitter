@@ -45,7 +45,7 @@ async function getTypeTweet(url_tweet){
 // ancienne fonction
 async function getUserStatusTweet(url_tweet){
     // /tweet/signalement/level
-    let url = "http://localhost:8081/tweet/signalement/level"
+    let url = "http://localhost:8081/extension/signalement/level"
 
     let response = await fetch(url, {
             method: 'POST',
@@ -74,7 +74,7 @@ async function getUserStatusTweet(url_tweet){
 
 // ancienne fonction
 async function upgradeUserStatusTweet(url_tweet){
-    let url = "http://localhost:8081/tweet/signalement/augmente"
+    let url = "http://localhost:8081/extension/signalement/augmente"
     let response = await fetch(url, {
             method: 'POST',
             headers: {
@@ -122,7 +122,7 @@ async function trouveEtatTweetParUrl (url_tweet)  {
 }
 
 async function signalTweet (url_tweet,sujet_signalement,description_signalement){
-    let url_api_request = "http://localhost:8081/tweet/signaleTweet"
+    let url_api_request = "http://localhost:8081/extension/signaleTweet"
 
     // console.log(url_tweet)
     // console.log(sujet_signalement)
@@ -152,7 +152,7 @@ async function signalTweet (url_tweet,sujet_signalement,description_signalement)
 
 async function getReportLevelOfTweet(url_tweet){
     // /tweet/signalement/level
-    let url = "http://localhost:8081/tweet/signalementLevel"
+    let url = "http://localhost:8081/extension/signalementLevel"
 
     let nvSignalement = await fetch(url, {
             method: 'POST',

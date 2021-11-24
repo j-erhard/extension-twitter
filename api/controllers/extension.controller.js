@@ -84,3 +84,48 @@ exports.signalementLevel = (req,res) =>{
         return res.status(400).send({success:0,data:"Bad request"});
     });
 }
+
+exports.addInformationToSignlement = (req,res) => {
+    signalements.belongsTo(tweets, {  foreignKey: "idTweet"});
+    tweets.hasMany(signalements, {  foreignKey: "idTweet"});
+    signalements.findAll({
+        where : {
+            description: "a"
+        },
+        include: [{
+            attributes: [],
+            model: tweets,
+            where : {
+                url: req.body.url,
+            },
+        }],
+        limit:1,
+    }).then(result => {
+        console.log(result)
+        result.destroy();
+
+        tweets.findAll({
+            where:{url:req.body.url},
+        }).then( async tweet => {
+            let idTweet = tweet[0].id;
+            let sujet = req.body.sujet;
+            let description = req.body.description;
+            const signalement = await signalements.create({
+                idTweet,
+                sujet,
+                description
+            });
+            return res.status(200).send({
+                success: 1,
+                signalement: signalement
+            });
+            }
+        ).catch(err => {
+            console.log(err);
+            return res.status(400).send({success:0,data:"Bad request"});
+        });
+    }).catch(err => {
+        console.log(err);
+        return res.status(400).send({success:0,data:"Bad request"});
+    });
+}
