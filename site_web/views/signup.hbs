@@ -1,34 +1,44 @@
-<!DOCTYPE html> <html>
+<!DOCTYPE html>
+<html>
 <head>
-    <title>Inscription</title>
+    <title>Connexion</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="styleCss.css" rel="stylesheet">
-    <link rel="stylesheet" href="styleSignin.css">
+    <link href="styleSignup.css" rel="stylesheet">
 </head>
-<body class="bg-gradient-to-r from-indigo-900 via-blue-700 via-blue-500 to-blue-400 ..." >
-<div class="formulaire">
-    <h1 class="font-bold text-white text-center"> Inscription </h1>
-    <form id="signup" name="signup" method="post" action="/signup">
-    <label for="prenom">Prénom</label>
-    <br>
-    <input name="prenom" type="text" />
-    <br>
-    <label for="nom">Nom</label>
-    <br>
-    <input name="nom" type="text" />
-    <br>
-    <label for="email">Email</label>
-    <br>
-    <input class="text" name="email" type="email" />
-    <br>
-    <label for="password">Mot de passe</label>
-    <br>
-    <input name="password" type="password" />
-    <br>
-    <br>
-        <div class="btnSignup" >
-            <input type="submit" value="S'inscrire" />
-        </div>
-</form>
+<body class="bg-gradient-to-r from-indigo-900 via-blue-900 via-blue-700 to-blue-500 ...">
+<div class="container">
+    <div class="item-1">
+        <h1 class="font-bold"> Inscription utilisateur </h1>
+        <br>
+        <br>
+        <form id="signup" name="signup" method="post" action="/signup">
+            <div class="flex flex-wrap -mx-3 mb-6">
+                <div class="w-full md:w-1/2 px-3">
+                    <label for="nom">Nom</label>
+                    <br>
+                    <input class="" name="nom" type="text" />
+                </div>
+                <div class="md:w-1/2 px-3">
+                    <label class="" for="prenom">Prénom</label>
+                    <br>
+                    <input class="" name="prenom" type="text" />
+                </div>
+            </div>
+            <label for="email">Adresse mail</label>
+            <br>
+            <input class="" name="email" type="text" />
+            <br>
+            <br>
+            <label for="password">Mot de passe</label>
+            <br>
+            <input name="password" type="password" />
+            <br>
+            <br>
+            <input class="btnLogin cursor-pointer" type="submit" value="Inscription" />
+            <br>
+        </form>
+    </div>
 </div>
 </body>
 </html>

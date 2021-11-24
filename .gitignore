@@ -5,5 +5,7 @@ site_web/node_modules
 site_web/package.json
 site_web/package-lock.json
 site_web/config/config.json
-
+.DS_STORE
+package.json
+node_modules/
 api/config/config.json
