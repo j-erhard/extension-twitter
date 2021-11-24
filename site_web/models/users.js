@@ -7,6 +7,7 @@ module.exports = function(sequelize, Sequelize) {
         password : {type: Sequelize.STRING,allowNull: false },
         type : {type: Sequelize.ENUM('admin','verificateur','visiteur'),notEmpty: true}
     }, {
-        tableName: 'utilisateurs'
+        tableName: 'utilisateurs',
+        timestamps: false
     });
     return User; }
