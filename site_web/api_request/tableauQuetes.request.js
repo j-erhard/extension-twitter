@@ -13,5 +13,6 @@ exports.findAllSignaledTweetOrderedByNbRequesDESC = async () =>{
         .then(data => {
             return data;
         });
+
     return (response)
 }
