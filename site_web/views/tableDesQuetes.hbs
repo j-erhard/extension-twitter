@@ -7,7 +7,7 @@
     <link href="styleTableQuete.css" rel="stylesheet">
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </head>
-<body onload="ajouteTab()">
+<body>
 <!-- Navbar goes here -->
 <nav class="bg-gray-700 shadow-lg">
     <div class="max-w-6xl mx-auto px-4">
@@ -81,95 +81,58 @@
                 {mode: 'cors'})
                 .then(result => result.json())
                 .then(data => {
-                    console.log(data)
+                    // console.log(data);
                     return data;
                 });
 
         return (response)
     }
-    (()=>{
-        test();
-    })();
-</script>
-
-
-
-<script type="text/javascript">
-    function getReportedTweet() {
-
-        const data = JSON.stringify({
-            "url": "https://twitter.com/matthew_d_green/status/1446888859464257539"
-        });
-
-        const xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
-
-        xhr.addEventListener("readystatechange", function () {
-            if (this.readyState === this.DONE) {
-                console.log(this.responseText);
-            }
-        });
-
-        xhr.open("POST", "http://localhost:8081/getTypeTweet");
-        xhr.setRequestHeader("Content-Type", "application/json");
-
-        xhr.send(data);
-    }
-
-    function ajouteTab() {
-        const tableau = document.getElementById("tableau");
-        for (let i = 0; i < 11; i++) {
-            const tr = document.createElement("tr");
-            tr.setAttribute("class", "text-gray-700");
-
-            const th1 = document.createElement("th");
-            th1.setAttribute("class", "px-4 py-3 text-ms border");
-            th1.innerHTML = "Julien" + i;
-
-            const th2 = document.createElement("th");
-            th2.setAttribute("class", "px-8 py-3 text-ms font-light border");
-            th2.innerHTML = `<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Sunsets don&#39;t get much better than this one over <a href="https://twitter.com/GrandTetonNPS?ref_src=twsrc%5Etfw">@GrandTetonNPS</a>. <a href="https://twitter.com/hashtag/nature?src=hash&amp;ref_src=twsrc%5Etfw">#nature</a> <a href="https://twitter.com/hashtag/sunset?src=hash&amp;ref_src=twsrc%5Etfw">#sunset</a> <a href="http://t.co/YuKy2rcjyU">pic.twitter.com/YuKy2rcjyU</a></p>&mdash; US Department of the Interior (@Interior) <a href="https://twitter.com/Interior/status/463440424141459456?ref_src=twsrc%5Etfw">May 5, 2014</a></blockquote>`;
-
-            const th3 = document.createElement("th");
-            th3.setAttribute("class", "px-8 py-3 text-ms font-light border");
-            th3.innerHTML = "" + i*3;
-
-            const th4 = document.createElement("th");
-            th4.setAttribute("class", "px-2 py-1 text-sm border");
-            const btn = document.createElement("button");
-            btn.setAttribute("class", "px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none");
-            btn.innerHTML = "Vérifier";
-            th4.appendChild(btn);
-
-            tr.appendChild(th1);
-            tr.appendChild(th2);
-            tr.appendChild(th3);
-            tr.appendChild(th4);
-            tableau.appendChild(tr);
+    (async () => {
+        const data = await test();
+        for (const ligne of data['data']) {
+            ajouteLigneAuTab(getUserByUrl(ligne['url']), ligne['url'], ligne['nbSignalement']);
         }
-    }
-    async function  testRequete() {
-        const data = JSON.stringify({
-            "url": "https://twitter.com/matthew_d_green/status/1446888859464257539"
-        });
+    })();
 
-        const xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
 
-        xhr.addEventListener("readystatechange", function () {
-            if (this.readyState === this.DONE) {
-                console.log(this.responseText);
-            }
-        });
-
-        xhr.open("POST", "http://localhost:8081/getTypeTweet");
-        xhr.setRequestHeader("Content-Type", "application/json");
-
-        xhr.send(data);
+    function getUserByUrl(url) {
+        url = url.replace('https://twitter.com/', '');
+        const INDEX_USER_1 = url.indexOf('/');
+        url = url.substring(0, INDEX_USER_1);
+        return url;
     }
 
+    function ajouteLigneAuTab(utilisateur, tweet, nbSignalement) {
+        const tableau = document.getElementById("tableau");
+        const tr = document.createElement("tr");
+        tr.setAttribute("class", "text-gray-700");
+
+        const th1 = document.createElement("th");
+        th1.setAttribute("class", "px-4 py-3 text-ms border");
+        th1.innerHTML = utilisateur;
+
+        const th2 = document.createElement("th");
+        th2.setAttribute("class", "px-8 py-3 text-ms font-light border");
+        th2.innerHTML = tweet;
+
+        const th3 = document.createElement("th");
+        th3.setAttribute("class", "px-8 py-3 text-ms font-light border");
+        th3.innerHTML = nbSignalement;
+
+        const th4 = document.createElement("th");
+        th4.setAttribute("class", "px-2 py-1 text-sm border");
+        const btn = document.createElement("button");
+        btn.setAttribute("class", "px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none");
+        btn.innerHTML = "Vérifier";
+        th4.appendChild(btn);
+
+        tr.appendChild(th1);
+        tr.appendChild(th2);
+        tr.appendChild(th3);
+        tr.appendChild(th4);
+        tableau.appendChild(tr);
+    }
 </script>
-
 
 
 <!-- component -->
