@@ -36,7 +36,7 @@ let router = express.Router();
  *   get:
  *      description: Used to get a customer's info
  *      tags:
- *          - extention
+ *          - extension
  *      parameters:
  *          - in: query
  *            name: url
@@ -60,7 +60,7 @@ router.get("/findEtatTweetByUrl", extensionController.findEtatTweetByUrl)
  *   post:
  *      description:
  *      tags:
- *          - extention
+ *          - extension
  *      parameters:
  *          - in: body
  *            name: tweet
@@ -73,13 +73,13 @@ router.get("/findEtatTweetByUrl", extensionController.findEtatTweetByUrl)
  *                 url:
  *                      type: int
  *                      maxLength: 150
- *                      example: https://twitter.com/exemple/010203
+ *                      example: https://twitter.com/Visa_Fr/status/14501268814461050920
  *                 sujet:
- *                      type: string
- *                      example: politique
+ *                      type: ["string", "null"]
+ *                      example:
  *                 description:
- *                      type: string
- *                      example: Pierre
+ *                      type: ["string", "null"]
+ *                      example:
  *      responses:
  *          '200':
  *              description: Resource added successfully
@@ -96,7 +96,7 @@ router.post("/signaleTweet", extensionController.signaleTweet)
  *   post:
  *      description:
  *      tags:
- *          - extention
+ *          - extension
  *      parameters:
  *          - in: body
  *            name: tweet
@@ -127,7 +127,7 @@ router.post("/signalementLevel", extensionController.signalementLevel)
  *   post:
  *      description:
  *      tags:
- *          - extention
+ *          - extension
  *      parameters:
  *          - in: body
  *            name: tweet
@@ -140,7 +140,7 @@ router.post("/signalementLevel", extensionController.signalementLevel)
  *                 url:
  *                      type: int
  *                      maxLength: 150
- *                      example: https://twitter.com/lereglement/status/1462080465691713537
+ *                      example: https://twitter.com/Visa_Fr/status/14501268814461050920
  *                 sujet:
  *                      type: string
  *                      example: politique

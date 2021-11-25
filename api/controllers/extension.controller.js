@@ -90,7 +90,9 @@ exports.addInformationToSignlement = (req,res) => {
     tweets.hasMany(signalements, {  foreignKey: "idTweet"});
     signalements.findAll({
         where : {
-            description: "a"
+            description: {
+                [Op.eq]: null
+            },
         },
         include: [{
             attributes: [],
@@ -100,10 +102,13 @@ exports.addInformationToSignlement = (req,res) => {
             },
         }],
         limit:1,
-    }).then(result => {
-        console.log(result)
-        result.destroy();
-
+    }).then(signalement => {
+        // console.log(signalement)
+        signalements.destroy({
+            where : {
+                id : signalement[0].id
+            }
+        });
         tweets.findAll({
             where:{url:req.body.url},
         }).then( async tweet => {
