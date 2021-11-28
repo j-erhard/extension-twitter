@@ -23,7 +23,7 @@ CREATE TABLE utilisateurs (
     nom             VARCHAR(20),
     email           VARCHAR(50) UNIQUE NOT NULL,
     password        LONGTEXT NOT NULL,
-    type            ENUM('admin', 'verificateur', 'visiteur') NOT NULL DEFAULT 'visiteur'
+    type            ENUM('admin', 'verificateur', 'visiteur') NOT NULL DEFAULT 'verificateur'
 );
 
 CREATE TABLE bannissements (
@@ -69,7 +69,7 @@ INSERT INTO jugements (decision, description) VALUES
 ('no information', 'Ce tweet ne contient pas de mauvaises informations')
 ;
 INSERT INTO utilisateurs (prenom, nom, email, password, type) VALUES
-('julien', 'erhard', 'julien.erhard@edu.univ-fcomte.fr', 'MDP', 'admin'),
+('julien', 'erhard', 'admin@edu.univ-fcomte.fr', '$2b$08$w9r0IHwtiQRbRWqe4U2F1eZgOyBHyob5Bv9yO.lO6uQzTJzEI./.C ', 'admin'),
 ('michel', 'schmitt', 'mich.schmi@edu.univ-fcomte.fr', 'MDP', 'vérificateur')
 ;
 INSERT INTO bannissements (idUtilisateur, raison, DateBan, Duree) VALUES
