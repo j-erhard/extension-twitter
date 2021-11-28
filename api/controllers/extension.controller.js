@@ -4,11 +4,19 @@ const {body} = require("express-validator");
 var idTweet;
 
 exports.findEtatTweetByUrl = (req,res) =>{
+    console.log(req.body.url);
     tweets.findAll({
-        where:{url:req.query.url},
+        where:{url:req.body.url},
         attributes:['etat']
     })
     .then(result => {
+        // console.log(result);
+        if (result.length === 0) {
+            result = [{}]
+            result[0].etat = "";
+        }
+        console.log(result)
+        console.log(result.length)
         return res.status(200).send({
             success:1,
             data:result

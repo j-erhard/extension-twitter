@@ -97,17 +97,19 @@ async function upgradeUserStatusTweet(url_tweet){
     return (response.message)
 }
 
-async function trouveEtatTweetParUrl (url_tweet)  {
-    let url_api_request = "http://localhost:8081/findEtatTweetByUrl"
+// ------------------- les nouvelles fonctions
 
-    let response = await fetch(url_api_request, {
-            method: 'get',
+async function trouveEtatTweetParUrl (url_tweet)  {
+    let url_api_request = "http://localhost:8081/extension/findEtatTweetByUrl"
+    // console.log(url_tweet);
+    let etatTweet = await fetch(url_api_request, {
+            method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
                 //Origin: origin
             },
-            query: JSON.stringify({
+            body: JSON.stringify({
                 url:url_tweet
             })
 
@@ -115,10 +117,11 @@ async function trouveEtatTweetParUrl (url_tweet)  {
         {mode: 'cors'})
         .then(result => result.json())
         .then(data => {
-            return data;
+            // console.log(data);
+            return data["data"][0].etat;
         });
 
-    return (response)
+    return (etatTweet)
 }
 
 async function signalTweet (url_tweet,sujet_signalement,description_signalement){
@@ -232,9 +235,9 @@ async function affichageTweets(){
         // article.style.boxShadow = "none"; fait bugger
         article.style.borderRadius = "10px";
         // status tweet: "Vrai", "Faux", "Tendancieux", "En cours de signalemnt", "Non_singalé", "signalé", "signalé_plus"
-
-        let statusTweet = "Vrai";
-            // await getTypeTweet(url_tweet)
+        // console.log(url_tweet);
+        let statusTweet = await trouveEtatTweetParUrl(url_tweet);
+        console.log(statusTweet);
         // console.log(JSON.stringify(statusTweet))
         switch (statusTweet) {
             case "Vrai":
@@ -243,7 +246,7 @@ async function affichageTweets(){
             case "Faux":
                 article.style.boxShadow = "0px 0px 10px 10px rgba(240, 25, 25, 0.8) inset";
                 break;
-            case "Tendancieux":
+            case "signalement":
                 article.style.boxShadow = "0px 0px 10px 10px rgba(150, 150, 150, 0.8) inset";
                 break;
         }

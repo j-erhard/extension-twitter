@@ -33,16 +33,23 @@ let router = express.Router();
 /**
  * @swagger
  * /extension/findEtatTweetByUrl:
- *   get:
+ *   post:
  *      description: Used to get a customer's info
  *      tags:
  *          - extension
  *      parameters:
- *          - in: query
- *            name: url
- *            type: string
- *            required: true
- *            value: https://twitter.com/Visa_Fr/status/14501268814461050920
+ *          - in: body
+ *            name: tweet
+ *            description: User data
+ *            schema:
+ *              type: object
+ *              required:
+ *                 - url
+ *              properties:
+ *                 url:
+ *                      type: string
+ *                      maxLength: 150
+ *                      example: https://twitter.com/Visa_Fr/status/14501268814461050920
  *      responses:
  *          '200':
  *              description: Resource returned successfully
@@ -51,7 +58,7 @@ let router = express.Router();
  *          '400':
  *              description: Bad request
  */
-router.get("/findEtatTweetByUrl", extensionController.findEtatTweetByUrl)
+router.post("/findEtatTweetByUrl", extensionController.findEtatTweetByUrl)
 
 
 /**
@@ -71,7 +78,7 @@ router.get("/findEtatTweetByUrl", extensionController.findEtatTweetByUrl)
  *                 - url
  *              properties:
  *                 url:
- *                      type: int
+ *                      type: string
  *                      maxLength: 150
  *                      example: https://twitter.com/Visa_Fr/status/14501268814461050920
  *                 sujet:
