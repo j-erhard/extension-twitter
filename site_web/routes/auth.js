@@ -30,6 +30,14 @@ module.exports = function(app,passport){
         if (req.isAuthenticated()) res.redirect('/home');
         else return next();
     }
+
+    function isAdmin(req,res,next){
+        if (req.isAuthenticated()){
+            if (req.user.type === "admin") return next();
+        } else {
+            return res.redirect("/home")
+        }
+    }
 }
 
 
