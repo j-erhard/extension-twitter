@@ -80,7 +80,7 @@
                 {mode: 'cors'})
                 .then(result => result.json())
                 .then(data => {
-                    // console.log(data);
+                    console.log(data);
                     return data;
                 });
         return (response)
@@ -95,13 +95,13 @@
         let url = "https://publish.twitter.com/"
         let response = await fetch(url, {
                     mode:"no-cors",
-                    method: 'GET',
+                    method: 'POST',
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
                         Origin: origin
                     },
-                    query: JSON.stringify({
+                    body: JSON.stringify({
                         url:url_tweet
                     })
                 },

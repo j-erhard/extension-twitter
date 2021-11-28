@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const port=8081;
 const extensionRoute = require("./routes/extension.routes");
 const siteWebRoute = require("./routes/siteWeb.routes");
+const jugementRoute = require("./routes/jugement.routes");
 // const customerRoute = require("./routes/customers.routes");
 // const employeeRoute = require("./routes/employees.routes");
 // const officeRoute = require("./routes/offices.routes");
@@ -31,6 +32,7 @@ app.use(function(req, res, next) {
 app.use(bodyParser.json());
 app.use("/extension",extensionRoute);
 app.use("/siteWeb",siteWebRoute);
+app.use("/jugement",jugementRoute);
 // app.use("/employee",employeeRoute);
 // app.use("/office",officeRoute);
 // app.use("/order",orderRoute);

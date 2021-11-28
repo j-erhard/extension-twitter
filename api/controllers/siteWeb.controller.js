@@ -7,7 +7,10 @@ exports.findAllSignaledTweetOrderedByNbRequesDESC = (req,res) =>{
     tweets.hasMany(signalements, {  foreignKey: "idTweet"});
     tweets.findAll({
         where: {
-            url: {[Op.notLike]: 'https://twitter.comclass=',}
+            [Op.and]:{
+                url: {[Op.notLike]: '%https://twitter.comclass='},
+                etat: {[Op.like]: '%signalement'}
+            }
         },
         attributes: [
             'id',
