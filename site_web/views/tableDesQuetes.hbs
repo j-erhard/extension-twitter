@@ -97,18 +97,20 @@
     async function getEmbed(url_tweet){
         let url = "https://publish.twitter.com/"
         let response = await fetch(url, {
+                    mode:"no-cors",
                     method: 'GET',
                     headers: {
                         'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                        //Origin: origin
+                        'Content-Type': 'application/json',
+                        Origin: origin
                     },
                     query: JSON.stringify({
                         url:url_tweet
                     })
                 },
-                {mode: 'cors'})
-                .then(result => result.json())
+                // {mode: 'no-cors'}
+                )
+                // .then(result => result.json())
                 .then(data => {
                     // console.log(data);
                     return data;
@@ -117,7 +119,8 @@
         return (response)
     }
     (async () => {
-        // const data = await getEmbed();
+        const data = await getEmbed("https://twitter.com/L_histoirien/status/1464264693292445712");
+        console.log(data)
     })();
 
 
