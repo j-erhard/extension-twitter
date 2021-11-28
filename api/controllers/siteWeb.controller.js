@@ -1,10 +1,14 @@
 const {tweets, signalements} = require("../models");
 const sequelize = require("sequelize");
+const {Op} = require("sequelize");
 
 exports.findAllSignaledTweetOrderedByNbRequesDESC = (req,res) =>{
     signalements.belongsTo(tweets, {  foreignKey: "idTweet"});
     tweets.hasMany(signalements, {  foreignKey: "idTweet"});
     tweets.findAll({
+        where: {
+            url: {[Op.notLike]: 'https://twitter.comclass=',}
+        },
         attributes: [
             'id',
             'url',
@@ -30,3 +34,4 @@ exports.findAllSignaledTweetOrderedByNbRequesDESC = (req,res) =>{
         return res.status(400).send({success:0,data:"Bad request"});
     });
 }
+
