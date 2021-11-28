@@ -67,11 +67,25 @@
 </nav>
 
 
+<div class="container ">
+    <div class="item-1 rounded-xl">
+        <h1 class="font-bold"> Vérification du tweet: </h1>
+        <blockquote class="twitter-tweet">
+            <a id="tweet_a_verifier"></a>
+        </blockquote>
+    </div>
+</div>
+
+
+
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
 
 <script>
     function $_GET(param) {
         const data = recup_param("url");
-        return data.replace('%22', '').replace('%22', '');
+        if (data !== null) return data.replace('%22', '').replace('%22', '');
+        else return "";
     }
     function recup_param(param) {
         var vars = {};
@@ -90,17 +104,18 @@
 
     (() => {
         const data = $_GET("url");
-        document.write(data);
+        if (data === "") {
+            window.location = '/tableDesQuetes';
+        }
+        // document.write(data);
+    })();
+
+    (() => {
+        var tweet = document.getElementById("tweet_a_verifier");
+        tweet.setAttribute("href", $_GET("url"));
     })();
 </script>
-<!---------------------------------------------------
-            TON CODE
 
-<script>
-
-
-
-            ------------------>
 
 
 
