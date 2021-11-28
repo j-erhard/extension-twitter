@@ -18,6 +18,9 @@ exports.home = function(req,res){
 exports.verifie = function(req,res){
     res.render('verifie'); }
 
+exports.admin = function(req,res){
+    res.render('admin'); }
+
 exports.logout = function(req,res){
     req.session.destroy(function(err) {
     res.redirect('/signin'); });

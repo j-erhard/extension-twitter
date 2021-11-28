@@ -59,7 +59,6 @@
     <script>
         const btn = document.querySelector("button.mobile-menu-button");
         const menu = document.querySelector(".mobile-menu");
-
         btn.addEventListener("click", () => {
             menu.classList.toggle("hidden");
         });
@@ -84,7 +83,6 @@
                     // console.log(data);
                     return data;
                 });
-
         return (response)
     }
     (async () => {
@@ -93,7 +91,6 @@
             ajouteLigneAuTab(getUserByUrl(ligne['url']), ligne['url'], ligne['nbSignalement']);
         }
     })();
-
     async function getEmbed(url_tweet){
         let url = "https://publish.twitter.com/"
         let response = await fetch(url, {
@@ -109,52 +106,46 @@
                     })
                 },
                 // {mode: 'no-cors'}
-                )
+        )
                 // .then(result => result.json())
                 .then(data => {
                     // console.log(data);
                     return data;
                 });
-
         return (response)
     }
     (async () => {
         const data = await getEmbed("https://twitter.com/L_histoirien/status/1464264693292445712");
-        console.log(data)
+        console.log(data);
+        console.log(data['body']);
     })();
-
-
     function getUserByUrl(url) {
         url = url.replace('https://twitter.com/', '');
         const INDEX_USER_1 = url.indexOf('/');
         url = url.substring(0, INDEX_USER_1);
         return url;
     }
-
     function ajouteLigneAuTab(utilisateur, tweet, nbSignalement) {
         const tableau = document.getElementById("tableau");
         const tr = document.createElement("tr");
         tr.setAttribute("class", "text-gray-700");
-
         const th1 = document.createElement("th");
         th1.setAttribute("class", "px-4 py-3 text-ms border");
         th1.innerHTML = utilisateur;
-
         const th2 = document.createElement("th");
         th2.setAttribute("class", "px-8 py-3 text-ms font-light border");
         th2.innerHTML = tweet;
-
         const th3 = document.createElement("th");
         th3.setAttribute("class", "px-8 py-3 text-ms font-light border");
         th3.innerHTML = nbSignalement;
-
         const th4 = document.createElement("th");
         th4.setAttribute("class", "px-2 py-1 text-sm border");
         const btn = document.createElement("button");
         btn.setAttribute("class", "px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none");
         btn.innerHTML = "Vérifier";
+        var urlToRedirect = '/verifie?url=\"'+tweet+"\"";
+        btn.onclick = function(tweet) { window.location.href=urlToRedirect; };
         th4.appendChild(btn);
-
         tr.appendChild(th1);
         tr.appendChild(th2);
         tr.appendChild(th3);

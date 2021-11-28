@@ -68,11 +68,35 @@
 
 
 
+<script>
+    function $_GET(param) {
+        const data = recup_param("url");
+        return data.replace('%22', '').replace('%22', '');
+    }
+    function recup_param(param) {
+        var vars = {};
+        window.location.href.replace( location.hash, '' ).replace(
+                /[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
+                function( m, key, value ) { // callback
+                    vars[key] = value !== undefined ? value : '';
+                }
+        );
 
+        if ( param ) {
+            return vars[param] ? vars[param] : null;
+        }
+        return vars;
+    }
+
+    (() => {
+        const data = $_GET("url");
+        document.write(data);
+    })();
+</script>
 <!---------------------------------------------------
             TON CODE
 
-
+<script>
 
 
 

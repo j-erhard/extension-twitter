@@ -17,9 +17,11 @@ module.exports = function(app,passport){
 
     app.get('/tableDesQuetes', isNotLoggedIn, authController.quetes);
 
-    app.get('/Contact', isNotLoggedIn, authController.contact);
+    app.get('/contact', isNotLoggedIn, authController.contact);
 
     app.get('/verifie', isNotLoggedIn, authController.verifie);
+
+    app.get('/admin', isAdmin, authController.admin);
 
     function isNotLoggedIn(req, res, next) {
         if (req.isAuthenticated()) return next();
@@ -32,8 +34,8 @@ module.exports = function(app,passport){
     }
 
     function isAdmin(req,res,next){
-        if (req.isAuthenticated()){
-            if (req.user.type === "admin") return next();
+        if (req.isAuthenticated() && req.user.type === "admin"){
+            return next();
         } else {
             return res.redirect("/home")
         }

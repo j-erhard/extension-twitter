@@ -109,6 +109,8 @@ SELECT id FROM tweets WHERE url = "?";
 INSERT INTO signalements (url, etat) VALUES (?, ?, ?);
 */
 
-
-
+-- SE FAIRE UN COMPTE ADMIN:
+UPDATE utilisateurs
+SET type = 'admin'
+WHERE email = 'admin@gmail.com';
 
