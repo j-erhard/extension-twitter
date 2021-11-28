@@ -34,30 +34,35 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get('/', function(req, res){
-    res.render('signin');
-});
+app.get('/contact', function(req, res){
+    res.render('contact');
 
 
-app.post('/contact', function(req, res, next){
     mailer.extend(app, {
         from: req.body.email,
         host: 'smtp.gmail.com',
-        secureConnection: false,
-        port: 25,
+        secureConnection: true,
+        port: 465,
         transportMethod: 'SMTP',
-
+        auth: {
+            user: 'kleinguillaume005@gmail.com',
+            pass: '20021223*gk'
+        }
     });
-    app.mailer.send('email', {
+});
+
+app.post('/contact', function(req, res, next){
+    app.mailer.send('contact', {
         to: 'kleinguillaume005@gmail.com',
         subject: req.body.subject,
-        message: req.body.message
+        message : req.body.message
     }, function(err){
         if(err){
-            console.log('On a une erreur !');return;
+            console.log(err);return;
         }
         res.send('Email envoye');
     });
+    //res.send("done")
 });
 
 
@@ -73,7 +78,7 @@ require('./config/passport/passport.js')(passport,models.user);
 
 //Sync Database
 models.sequelize.sync().then(function() {
-console.log('La BDD fonctionne correctement') }).catch(function(err) {
+    console.log('La BDD fonctionne correctement') }).catch(function(err) {
     console.log(err, "Problème avec la MAJ de la BDD")
 });
 
