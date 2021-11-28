@@ -94,6 +94,32 @@
         }
     })();
 
+    async function getEmbed(url_tweet){
+        let url = "https://publish.twitter.com/"
+        let response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                        //Origin: origin
+                    },
+                    query: JSON.stringify({
+                        url:url_tweet
+                    })
+                },
+                {mode: 'cors'})
+                .then(result => result.json())
+                .then(data => {
+                    // console.log(data);
+                    return data;
+                });
+
+        return (response)
+    }
+    (async () => {
+        // const data = await getEmbed();
+    })();
+
 
     function getUserByUrl(url) {
         url = url.replace('https://twitter.com/', '');
