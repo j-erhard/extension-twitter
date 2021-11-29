@@ -16,7 +16,7 @@ module.exports = function(app,passport){
             transportMethod: 'SMTP',
             auth: {
                 user: 'kleinguillaume005@gmail.com',
-                pass: '20021223*gk'
+                pass: ''
             }
         });
     });
