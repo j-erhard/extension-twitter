@@ -34,36 +34,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get('/contact', function(req, res){
-    res.render('contact');
 
-
-    mailer.extend(app, {
-        from: req.body.email,
-        host: 'smtp.gmail.com',
-        secureConnection: true,
-        port: 465,
-        transportMethod: 'SMTP',
-        auth: {
-            user: 'kleinguillaume005@gmail.com',
-            pass: '20021223*gk'
-        }
-    });
-});
-
-app.post('/contact', function(req, res, next){
-    app.mailer.send('contact', {
-        to: 'kleinguillaume005@gmail.com',
-        subject: req.body.subject,
-        message : req.body.message
-    }, function(err){
-        if(err){
-            console.log(err);return;
-        }
-        res.send('Email envoye');
-    });
-    //res.send("done")
-});
 
 
 
