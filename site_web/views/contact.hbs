@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Contact</title>
+    <title>Formulaire de contact</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="styleCss.css" rel="stylesheet">
     <link href="styleContact.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
 </head>
 <body>
 <!-- Navbar goes here -->
@@ -50,92 +52,58 @@
     <!-- mobile menu -->
     <div class="hidden mobile-menu">
         <ul class="">
-            <li class="active"><a href="index.html" class="block text-sm px-2 py-4 text-white bg-green-500 font-semibold">Accueil</a></li>
+            <li class="active"><a href="index.html" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Accueil</a></li>
             <li><a href="#services" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Table des requêtes</a></li>
-            <li><a href="#about" class="block text-sm px-2 py-4 hover:bg-green-500 transition duration-300">Contact</a></li>
+            <li><a href="#about" class="block text-sm px-2 py-4 text-white bg-green-500 font-semibold">Contact</a></li>
         </ul>
     </div>
     <script>
         const btn = document.querySelector("button.mobile-menu-button");
         const menu = document.querySelector(".mobile-menu");
-
         btn.addEventListener("click", () => {
             menu.classList.toggle("hidden");
         });
     </script>
 </nav>
 
-<title>Formulaire de contact</title>
 
-<!-- Bootstrap core CSS -->
-<link href="/css/bootstrap.css" rel="stylesheet">
-<style>
-    body {
-        padding-top: 50px;
-    }
-    .main{
-        padding-top: 50px;
-    }
-</style>
-</head>
 
-<body>
 
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
 
-        </div>
-        <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
 
-            </ul>
-        </div><!--/.nav-collapse -->
-    </div>
-</div>
-
-<div class="container main">
 
 
     <div class="w-full bg-gray-800 full-screen ">
         <div class="bg-gradient-to-b from-blue-800 to-blue-600 h-96 "></div>
         <div class="max-w-5xl mx-auto px-6 sm:px-6 lg:px-8 mb-12">
             <div class="bg-gray-900 w-full shadow rounded p-8 sm:p-12 -mt-72">
-                <form action="" method="post">
-                    <form role="form" action="/contact" method="post">
-                        <div class="form-group form-group w-full flex flex-col mt-8">
-                            <label class = "font-semibold leading-none text-gray-300" for="subject">Sujet</label>
-                            <input type="text" name="subject" class="form-control form-control h-40 text-base leading-none text-gray-50 p-3 focus:outline-none focus:border-blue-700 mt-4 bg-gray-800 border-0 rounded" required placeholder="Sujet">
+                <form role="form" action="/contact" method="post">
+                    <div class="form-group form-group w-full flex flex-col mt-8">
+                        <label class = "font-semibold leading-none text-gray-300" for="subject">Sujet</label>
+                        <input type="text" name="subject" class="form-control form-control h-40 text-base leading-none text-gray-50 p-3 focus:outline-none focus:border-blue-700 mt-4 bg-gray-800 border-0 rounded" required placeholder="Sujet">
+                    </div>
+
+                    <div class="form-group  md:flex items-center mt-8 form-group w-full flex flex-col mt-8">
+                        <div class="w-full flex flex-col">
+                            <label class="font-semibold leading-none text-gray-300 font-semibold leading-none text-gray-300" for="email">Email</label>
+                            <input type="email" name="email" class="form-control leading-none text-gray-50 p-3 focus:outline-none focus:border-blue-700 mt-4 border-0 bg-gray-800 rounded" required placeholder="Email">
                         </div>
 
-                        <div class="form-group  md:flex items-center mt-8 form-group w-full flex flex-col mt-8">
-                            <div class="w-full flex flex-col">
-                                <label class="font-semibold leading-none text-gray-300 font-semibold leading-none text-gray-300" for="email">Email</label>
-                                <input type="email" name="email" class="form-control leading-none text-gray-50 p-3 focus:outline-none focus:border-blue-700 mt-4 border-0 bg-gray-800 rounded" required placeholder="Email">
-                            </div>
 
+                        <div class="form-group w-full flex flex-col mt-8">
+                            <label class="font-semibold leading-none text-gray-300" for="message">Message</label>
+                            <textarea name="message" class="form-control h-40 text-base leading-none text-gray-50 p-3 focus:outline-none focus:border-blue-700 mt-4 bg-gray-800 border-0 rounded" required placeholder="Votre message" rows="3"></textarea>
+                        </div>
 
-                            <div class="form-group w-full flex flex-col mt-8">
-                                <label class="font-semibold leading-none text-gray-300" for="message">Message</label>
-                                <textarea name="message" class="form-control h-40 text-base leading-none text-gray-50 p-3 focus:outline-none focus:border-blue-700 mt-4 bg-gray-800 border-0 rounded" required placeholder="Votre message" rows="3"></textarea>
-                            </div>
-
-                            <div class="flex items-center justify-center w-full">
-                                <button type="submit" id="submit" class="mt-9 font-semibold leading-none text-white py-4 px-10 bg-blue-700 rounded hover:bg-blue-600 focus:ring-2 focus:ring-offset-2 focus:ring-blue-700 focus:outline-none">
-                                    Envoyer
-                                </button>
-                            </div>
-                    </form>
+                        <div class="flex items-center justify-center w-full">
+                            <button type="submit" id="submit" class="mt-9 font-semibold leading-none text-white py-4 px-10 bg-blue-700 rounded hover:bg-blue-600 focus:ring-2 focus:ring-offset-2 focus:ring-blue-700 focus:outline-none">
+                                Envoyer
+                            </button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
-    </div>
 
 
 
