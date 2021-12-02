@@ -2,6 +2,15 @@
 //"matches": ["<all_urls>"],
 
 
+
+
+/***************************************************************
+ *         gestion de l'actualisation des bouttons             *
+ ***************************************************************/
+var listeTweetVu = [[]]
+
+
+
 /***************************************************************
  *                   Récupération de données                   *
  ***************************************************************/
@@ -149,7 +158,7 @@ async function signalTweet (url_tweet,sujet_signalement,description_signalement)
         .then(data => {
             return data;
         });
-    console.log(response);
+    // console.log(response);
 
     return (response)
 }
@@ -185,7 +194,7 @@ async function getReportLevelOfTweet(url_tweet){
     // if HTTP-status is 200-299
     // get the response body
     // console.log(JSON.stringify(response.tweetStatus))
-    console.log(nvSignalement)
+    // console.log(nvSignalement)
     return (nvSignalement)
 }
 
@@ -237,7 +246,7 @@ async function affichageTweets(){
         // status tweet: "Vrai", "Faux", "Tendancieux", "En cours de signalemnt", "Non_singalé", "signalé", "signalé_plus"
         // console.log(url_tweet);
         let statusTweet = await trouveEtatTweetParUrl(url_tweet);
-        console.log(statusTweet);
+        // console.log(statusTweet);
         // console.log(JSON.stringify(statusTweet))
         switch (statusTweet) {
             case "Vrai":
@@ -307,33 +316,50 @@ async function ajoutBouton(article, url_tweet, statusTweet) {
         input.style.height = "0px";
         input.style.borderRadius = "10px";
         input.style.textAlign = "center";
+        input.onclick = function () {
+            signalTweet(url_tweet, null, null);
+            statusUserTweet++;
+            console.log("est passé dans le case 0");
+            };
         groupBouton.parentElement.appendChild(input);
         }
     var bouton_report = article.getElementsByClassName('css-18t94o4 css-1dbjc4n r-1777fci r-bt1l66 r-1ny4l3l r-bztko3 r-lrvibr bouton_extension')[0];
+
+    // console.log(statusUserTweet);
     switch (statusUserTweet) {
         case 0:
             bouton_report.innerHTML = "signaler";
             bouton_report.style.backgroundColor = "#0093f5";
+            console.log("est passé dans le case 0");
+
             bouton_report.onclick = function () {
-                bouton_report.innerHTML = "ajouter info";
+                bouton_report.innerHTML = "Merci !";
                 bouton_report.style.backgroundColor = "#f56e00";
-                bouton_report.onclick = function () {
+                if (statusUserTweet === 0) {
+                    console.log(statusUserTweet)
                     signalTweet(url_tweet,null,null);
-                    // getReportLevelOfTweet(url_tweet);
-                    ajoutBouton(article, url_tweet, statusTweet);
-                    showModal();
-                };
+                }
+
+
+                // getReportLevelOfTweet(url_tweet);
+                statusUserTweet++;
+                // ajoutBouton(article, url_tweet, statusTweet);
+                    // showModal(url_tweet);
+
             };
             break;
         case 1:
-            bouton_report.innerHTML = "ajouter info";
+            bouton_report.innerHTML = "Merci !";
             bouton_report.style.backgroundColor = "#f56e00";
             bouton_report.onclick = function () {
                 // getReportLevelOfTweet(url_tweet);
                 bouton_report.innerHTML = "+ d'info";
                 bouton_report.style.backgroundColor = "#3541ff";
                 bouton_report.onclick = function () {
-                    signalTweet(url_tweet,null,null);
+                    // signalTweet(url_tweet,null,null);
+                    // statusUserTweet++;
+                    console.log("est passé dans le case 1");
+
                     // getReportLevelOfTweet(url_tweet);
                 };
             };
@@ -342,6 +368,8 @@ async function ajoutBouton(article, url_tweet, statusTweet) {
             bouton_report.innerHTML = "Merci !";
             bouton_report.style.backgroundColor = "#3541ff";
             bouton_report.onclick = function () {
+                console.log("est passé dans le case 2");
+
                 // getReportLevelOfTweet(url_tweet);
             };
             break;
@@ -365,7 +393,7 @@ window.addEventListener('scroll', function(){
 });
 
 
-const showModal =()=>{
+const showModal = ()=>{
     const modal = document.createElement('dialog');
     modal.setAttribute(
         "style",`
@@ -436,7 +464,7 @@ background-color: white;
     width: 255px;
     border-radius: 10px;
     border: 1px solid #0062a7;
-    resize : none;" placeholder="Commentaires"></textarea>
+    resize : none;" id="Commentaires" placeholder="Commentaires"></textarea>
     
     <button class="oui" style="
     position: absolute;

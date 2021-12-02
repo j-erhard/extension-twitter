@@ -15,8 +15,8 @@ exports.findEtatTweetByUrl = (req,res) =>{
             result = [{}]
             result[0].etat = "";
         }
-        console.log(result)
-        console.log(result.length)
+        // console.log(result)
+        // console.log(result.length)
         return res.status(200).send({
             success:1,
             data:result
