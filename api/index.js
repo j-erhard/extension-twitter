@@ -6,6 +6,8 @@ const port=8081;
 const extensionRoute = require("./routes/extension.routes");
 const siteWebRoute = require("./routes/siteWeb.routes");
 const jugementRoute = require("./routes/jugement.routes");
+const verifieRoute = require("./routes/verifie.routes");
+
 // const customerRoute = require("./routes/customers.routes");
 // const employeeRoute = require("./routes/employees.routes");
 // const officeRoute = require("./routes/offices.routes");
@@ -33,6 +35,7 @@ app.use(bodyParser.json());
 app.use("/extension",extensionRoute);
 app.use("/siteWeb",siteWebRoute);
 app.use("/jugement",jugementRoute);
+app.use("/verifie",verifieRoute);
 // app.use("/employee",employeeRoute);
 // app.use("/office",officeRoute);
 // app.use("/order",orderRoute);

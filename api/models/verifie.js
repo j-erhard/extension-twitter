@@ -7,7 +7,8 @@ module.exports = function(sequelize, DataTypes) {
       references: {
         model: 'tweets',
         key: 'id'
-      }
+      },
+      primaryKey: true
     },
     idUtilisateur: {
       type: DataTypes.INTEGER,
@@ -15,7 +16,8 @@ module.exports = function(sequelize, DataTypes) {
       references: {
         model: 'utilisateurs',
         key: 'id'
-      }
+      },
+      primaryKey: true
     },
     idJugement: {
       type: DataTypes.INTEGER,
@@ -23,7 +25,8 @@ module.exports = function(sequelize, DataTypes) {
       references: {
         model: 'jugements',
         key: 'id'
-      }
+      },
+      primaryKey: true
     }
   }, {
     sequelize,
