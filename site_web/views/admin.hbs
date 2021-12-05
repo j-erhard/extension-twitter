@@ -67,18 +67,123 @@
 </nav>
 
 
+<!-- Code à mettre ici -->
+<!-- Tableau avec le jugement des vérificateurs en fonction du tweet -->
+<!-- Afficher nom utilisateur, description du tweet + nom du mec qui a fait le tweet, jugement + description jugement -->
 
 
-<!---------------------------------------------------
-            TON CODE
+<script>
+     async function getVerificationOfVerificatorById (){
+        let url_api_request = "http://localhost:8081/verifie/getAllVerificationOfVerificator"
+
+        let response = await fetch(url_api_request, {
+                    method: 'get',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                        //Origin: origin
+                    },
+                },
+                {mode: 'cors'})
+                .then(result => result.json())
+                .then(data => {
+                    return data;
+                });
+
+        return (response)
+    }
+    async function get (url_tweet){
+        let url_api_request = "http://localhost:8081/verifie/getVerificationOfVerificatorById"
+
+        let response = await fetch(url_api_request, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                        //Origin: origin
+                    },
+                    body: JSON.stringify({
+                        url:url_tweet,
+                    })
+                },
+                {mode: 'cors'})
+                .then(result => result.json())
+                .then(data => {
+                    return data;
+                });
+
+        return (response)
+    }
+
+    (async () => {
+        const data = await getVerificationOfVerificatorById();
+
+        for (const i of data['data']) {
+            ajouteLigneAuTab(i.utilisateur.prenom, getUserByUrl(i.tweet.url), i.tweet.url, i.jugement.decision, i.jugement.description);
+        }
+
+    })();
+
+    function getUserByUrl(url) {
+        url = url.replace('https://twitter.com/', '');
+        const INDEX_USER_1 = url.indexOf('/');
+        url = url.substring(0, INDEX_USER_1);
+        return url;
+    }
+
+    function ajouteLigneAuTab(verificateur, ctweet, tweet, jugement, dJugement) {
+        const tableau = document.getElementById("tableau");
+        const tr = document.createElement("tr");
+        tr.setAttribute("class", "text-gray-700");
+        const th1 = document.createElement("th");
+        th1.setAttribute("class", "px-4 py-3 text-ms border");
+        th1.innerHTML = verificateur;
+        const th2 = document.createElement("th");
+        th2.setAttribute("class", "px-8 py-3 text-ms font-light border");
+        th2.innerHTML = ctweet;
+        const th3 = document.createElement("th");
+        th3.setAttribute("class", "px-8 py-3 text-ms font-light border");
+        th3.innerHTML = tweet;
+        const th4 = document.createElement("th");
+        th4.setAttribute("class", "px-8 py-3 text-ms font-light border");
+        th4.innerHTML = jugement;
+        const th5 = document.createElement("th");
+        th5.setAttribute("class", "px-8 py-3 text-ms font-light border");
+        th5.innerHTML = dJugement;
+
+        tr.appendChild(th1);
+        tr.appendChild(th2);
+        tr.appendChild(th3);
+        tr.appendChild(th4);
+        tr.appendChild(th5);
+        tableau.appendChild(tr);
+    }
 
 
+</script>
 
-
-
-            ------------------>
-
-
+<!-- Tableau avec le jugement des vérificateurs en fonction du tweet -->
+<section class="container mx-auto p-6 font-mono">
+    <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
+        <div class="w-full overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                <tr class="text-md font-semibold tracking-wide text-center text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
+                    <th class="px-2 py-3">Vérificateur</th>
+                    <th class="px-2 py-3">Créateur</th>
+                    <th class="px-2 py-3">Tweet</th>
+                    <th class="px-2 py-3">Jugement </th>
+                    <th class="px-2 py-3">Description </th>
+                </tr>
+                </thead>
+                <tbody id="tableau" class="bg-white">
+                <tr class="text-gray-700">
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
 
 <!-- component -->
 <footer class="footer bg-gray-700 relative pt-1">
