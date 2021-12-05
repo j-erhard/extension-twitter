@@ -8,7 +8,7 @@ Début SIGNUP CSS
  */
 
 
-.container {
+.container-center {
     display: flex;
     flex-direction: row;
     margin: 7% auto;
@@ -23,7 +23,7 @@ Début SIGNUP CSS
     width: 100%;
 }
 
-input {
+.container-center input {
     margin-top: 5px;
     border-radius: 5px;
     background-color: #6c6b6b;
@@ -36,20 +36,7 @@ input {
 
 }
 
-.btnLogin {
-    width: 30%;
-    height: 50px;
-    background-color: #2da9f8;
-    border: 1px #2da9f8 solid;
-    border-radius: 10px;
-    text-align: center;
-    margin-top: 5%;
-    margin-left: 35%;
-    margin-bottom: 1%;
-
-}
-
-h1 {
+.container-center h1 {
     text-align: center;
     font-size: 20px;
 }
@@ -58,15 +45,7 @@ a {
     font-size: 14px;
 
 }
-.formulaire {
-    padding: 3%;
-    background-color: #424141;
-    width: 70%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10%;
-}
-.formulaire input {
+input {
     width: 50%;
     background-color: #6c6b6b;
     align-items: center;
@@ -97,18 +76,6 @@ select, option {
     outline: none;
 }
 
-.btnSignup {
-    width: 45%;
-    height: 50px;
-    background-color: #2da9f8;
-    border: 1px #2da9f8 solid;
-    border-radius: 10px;
-    text-align: center;
-    margin-top: 5%;
-    margin-left: 27%;
-    margin-bottom: 2%;
-
-}
 
 /*
 Fin SIGNUP CSS
