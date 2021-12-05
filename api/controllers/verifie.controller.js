@@ -2,7 +2,7 @@ const {tweets, verifie, utilisateurs, signalements, jugements} = require("../mod
 const sequelize = require("sequelize");
 const {Op} = require("sequelize");
 
-exports.getVerificationOfVerificatorById = (req,res) =>{
+exports.getAllVerificationOfVerificator = (req,res) =>{
     // tweets.hasMany(verifie, {  foreignKey: "idTweet"});
     // utilisateurs.hasMany(verifie, { foreignKey: "idUtilisateur"});
     // jugements.hasMany(verifie, { foreignKey: "idJugement"});
@@ -15,9 +15,6 @@ exports.getVerificationOfVerificatorById = (req,res) =>{
         include: [
         {
             model: tweets,
-            where:{
-                url: req.body.url
-            }
         },
         {
             model: utilisateurs,

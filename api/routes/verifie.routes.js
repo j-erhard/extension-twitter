@@ -4,8 +4,8 @@ let router = express.Router();
 
 /**
  * @swagger
- * /verifie/getVerificationOfVerificatorById:
- *   post:
+ * /verifie/getAllVerificationOfVerificator:
+ *   get:
  *      description:
  *      tags:
  *          - verifie
@@ -30,7 +30,7 @@ let router = express.Router();
  *          '400':
  *              description: Bad request
  */
-router.post("/getVerificationOfVerificatorById", verifieController.getVerificationOfVerificatorById)
+router.get("/getAllVerificationOfVerificator", verifieController.getAllVerificationOfVerificator)
 
 
 module.exports = router;
