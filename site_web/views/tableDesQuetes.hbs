@@ -80,7 +80,7 @@
                 {mode: 'cors'})
                 .then(result => result.json())
                 .then(data => {
-                    console.log(data);
+                    // console.log(data);
                     return data;
                 });
         return (response)
@@ -114,11 +114,6 @@
                 });
         return (response)
     }
-    (async () => {
-        const data = await getEmbed("https://twitter.com/L_histoirien/status/1464264693292445712");
-        console.log(data);
-        console.log(data['body']);
-    })();
     function getUserByUrl(url) {
         url = url.replace('https://twitter.com/', '');
         const INDEX_USER_1 = url.indexOf('/');

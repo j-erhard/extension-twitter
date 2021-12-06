@@ -16,7 +16,7 @@ exports.home = function(req,res){
     res.render('home'); }
 
 exports.verifie = function(req,res){
-    res.render('verifie'); }
+    res.render('verifie', {user: req.user}); }
 
 exports.admin = function(req,res){
     res.render('admin'); }

@@ -72,6 +72,7 @@
 <div class="container-center ">
     <div class="item-1 rounded-xl">
         <h1 class="font-bold"> Vérification des tweets </h1>
+        <p id="userId" style="visibility: hidden">{{user.id}}</p>
         <br>
         <br>
         <div class="flex flex-wrap -mx-3 mb-6">
@@ -133,44 +134,47 @@ function recup_param(param) {
     tweet.setAttribute("href", $_GET("url"));
 })();
 
-function ajoutJugement() {
+async function ajoutJugement() {
     //récupération des paramètres
     const url = $_GET("url");
     const jugement = document.getElementById("jugement").value;
     const description = document.getElementById("description").value;
-    console.log(url);
-    console.log(jugement);
-    console.log(description);
-    nouveauJugement(url, 2, jugement, description);
+    const userId = document.getElementById("userId").innerHTML;
+    // console.log(userId);
+    // console.log(url);
+    // console.log(jugement);
+    // console.log(description);
+    rep = await nouveauJugement(url, userId, jugement, description);
+    // console.log(rep);
+    window.location = '/tableDesQuetes';
 }
 
 
-async function nouveauJugement(url, idUtilisateur, jugement, description){
-    let url_api = "https://localhost:8081/jugement/nouveauJugement/"
-    let response = await fetch(url_api, {
-                mode:"no-cors",
+async function nouveauJugement (url_tweet,idUtilisateur,decision,description){
+    let url = "http://localhost:8081/jugement/nouveauJugement"
+    let response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    Origin: origin
+                    'Content-Type': 'application/json'
+                    //Origin: origin
                 },
                 body: JSON.stringify({
-                    url:url,
-                    idUtilisateur:idUtilisateur,
-                    decision:jugement,
-                    description:description
+                    url:url_tweet,
+                    idUtilisateur: idUtilisateur,
+                    decision: decision,
+                    description: description
                 })
             },
-            {mode: 'no-cors'}
-    )
-            // .then(result => result.json())
+            {mode: 'cors'})
+            .then(result => result.json())
             .then(data => {
-                // console.log(data);
                 return data;
             });
+
     return (response)
 }
+
 </script>
 
 
