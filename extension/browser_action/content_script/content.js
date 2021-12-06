@@ -249,11 +249,14 @@ async function affichageTweets(){
         // console.log(statusTweet);
         // console.log(JSON.stringify(statusTweet))
         switch (statusTweet) {
-            case "Vrai":
+            case "vrai":
                 article.style.boxShadow = "0px 0px 10px 10px rgba(25, 240, 25, 0.8) inset";
                 break;
-            case "Faux":
+            case "faux":
                 article.style.boxShadow = "0px 0px 10px 10px rgba(240, 25, 25, 0.8) inset";
+                break;
+            case "tandancieux":
+                article.style.boxShadow = "0px 0px 10px 10px rgba(255, 160, 0, 0.8) inset";
                 break;
             case "signalement":
                 article.style.boxShadow = "0px 0px 10px 10px rgba(150, 150, 150, 0.8) inset";
