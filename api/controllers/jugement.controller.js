@@ -19,6 +19,8 @@ exports.nouveauJugement = async (req,res) =>{
                 url:urlTweet
             }
         }).then(async tweet => {
+            tweet.etat = req.body.decision;
+            await tweet.save();
             // console.log(tweet)
             // console.log(tweet.id)
             // console.log(createdJugement.json)
