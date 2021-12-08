@@ -7,7 +7,6 @@
     <link href="styleTableQuete.css" rel="stylesheet">
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </head>
-<body>
 <!-- Navbar goes here -->
 <nav class="bg-gray-700 shadow-lg">
     <div class="max-w-6xl mx-auto px-4">
@@ -65,149 +64,149 @@
     </script>
 </nav>
 
-
-<script>
-    async function test (){
-        let url = "http://localhost:8081/siteWeb/findAllSignaledTweetOrderedByNbRequesDESC"
-        let response = await fetch(url, {
-                    method: 'GET',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                        //Origin: origin
+<div  class="flex flex-col h-screen justify-between">
+    <script>
+        async function test (){
+            let url = "http://localhost:8081/siteWeb/findAllSignaledTweetOrderedByNbRequesDESC"
+            let response = await fetch(url, {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                            //Origin: origin
+                        },
                     },
-                },
-                {mode: 'cors'})
-                .then(result => result.json())
-                .then(data => {
-                    // console.log(data);
-                    return data;
-                });
-        return (response)
-    }
-    (async () => {
-        const data = await test();
-        for (const ligne of data['data']) {
-            ajouteLigneAuTab(getUserByUrl(ligne['url']), ligne['url'], ligne['nbSignalement']);
+                    {mode: 'cors'})
+                    .then(result => result.json())
+                    .then(data => {
+                        // console.log(data);
+                        return data;
+                    });
+            return (response)
         }
-    })();
-    async function getEmbed(url_tweet){
-        let url = "https://publish.twitter.com/"
-        let response = await fetch(url, {
-                    mode:"no-cors",
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        Origin: origin
+        (async () => {
+            const data = await test();
+            for (const ligne of data['data']) {
+                ajouteLigneAuTab(getUserByUrl(ligne['url']), ligne['url'], ligne['nbSignalement']);
+            }
+        })();
+        async function getEmbed(url_tweet){
+            let url = "https://publish.twitter.com/"
+            let response = await fetch(url, {
+                        mode:"no-cors",
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            Origin: origin
+                        },
+                        body: JSON.stringify({
+                            url:url_tweet
+                        })
                     },
-                    body: JSON.stringify({
-                        url:url_tweet
-                    })
-                },
-                // {mode: 'no-cors'}
-        )
-                // .then(result => result.json())
-                .then(data => {
-                    // console.log(data);
-                    return data;
-                });
-        return (response)
-    }
-    function getUserByUrl(url) {
-        url = url.replace('https://twitter.com/', '');
-        const INDEX_USER_1 = url.indexOf('/');
-        url = url.substring(0, INDEX_USER_1);
-        return url;
-    }
-    function ajouteLigneAuTab(utilisateur, tweet, nbSignalement) {
-        const tableau = document.getElementById("tableau");
-        const tr = document.createElement("tr");
-        tr.setAttribute("class", "text-gray-700");
-        const th1 = document.createElement("th");
-        th1.setAttribute("class", "px-4 py-3 text-ms border");
-        th1.innerHTML = utilisateur;
-        const th2 = document.createElement("th");
-        th2.setAttribute("class", "px-8 py-3 text-ms font-light border");
-        th2.innerHTML = tweet;
-        const th3 = document.createElement("th");
-        th3.setAttribute("class", "px-8 py-3 text-ms font-light border");
-        th3.innerHTML = nbSignalement;
-        const th4 = document.createElement("th");
-        th4.setAttribute("class", "px-2 py-1 text-sm border");
-        const btn = document.createElement("button");
-        btn.setAttribute("class", "px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none");
-        btn.innerHTML = "Vérifier";
-        var urlToRedirect = '/verifie?url=\"'+tweet+"\"";
-        btn.onclick = function(tweet) { window.location.href=urlToRedirect; };
-        th4.appendChild(btn);
-        tr.appendChild(th1);
-        tr.appendChild(th2);
-        tr.appendChild(th3);
-        tr.appendChild(th4);
-        tableau.appendChild(tr);
-    }
-</script>
+                    // {mode: 'no-cors'}
+            )
+                    // .then(result => result.json())
+                    .then(data => {
+                        // console.log(data);
+                        return data;
+                    });
+            return (response)
+        }
+        function getUserByUrl(url) {
+            url = url.replace('https://twitter.com/', '');
+            const INDEX_USER_1 = url.indexOf('/');
+            url = url.substring(0, INDEX_USER_1);
+            return url;
+        }
+        function ajouteLigneAuTab(utilisateur, tweet, nbSignalement) {
+            const tableau = document.getElementById("tableau");
+            const tr = document.createElement("tr");
+            tr.setAttribute("class", "text-gray-700");
+            const th1 = document.createElement("th");
+            th1.setAttribute("class", "px-4 py-3 text-ms border");
+            th1.innerHTML = utilisateur;
+            const th2 = document.createElement("th");
+            th2.setAttribute("class", "px-8 py-3 text-ms font-light border");
+            th2.innerHTML = tweet;
+            const th3 = document.createElement("th");
+            th3.setAttribute("class", "px-8 py-3 text-ms font-light border");
+            th3.innerHTML = nbSignalement;
+            const th4 = document.createElement("th");
+            th4.setAttribute("class", "px-2 py-1 text-sm border");
+            const btn = document.createElement("button");
+            btn.setAttribute("class", "px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none");
+            btn.innerHTML = "Vérifier";
+            var urlToRedirect = '/verifie?url=\"'+tweet+"\"";
+            btn.onclick = function(tweet) { window.location.href=urlToRedirect; };
+            th4.appendChild(btn);
+            tr.appendChild(th1);
+            tr.appendChild(th2);
+            tr.appendChild(th3);
+            tr.appendChild(th4);
+            tableau.appendChild(tr);
+        }
+    </script>
 
 
-<!-- component -->
-<section class="container mx-auto p-6 font-mono">
-    <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
-        <div class="w-full overflow-x-auto">
-            <table class="w-full">
-                <thead>
-                <tr class="text-md font-semibold tracking-wide text-center text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
-                    <th class="px-4 py-3">Utilisateur</th>
-                    <th class="px-10 py-3">Tweet</th>
-                    <th class="px-2 py-3">Nombre de signalement</th>
-                    <th class="px-2 py-">Actions</th>
-                </tr>
-                </thead>
-                <tbody id="tableau" class="bg-white">
-                <tr class="text-gray-700">
-                    <!--                            <td class="px-4 py-3 text-ms border">Julien</td>-->
-                    <!--                            <td class="px-8 py-3 text-ms font-semibold border">Tweet</td>-->
-                    <!--                            <td class="px-4 py-3 text-xs border">5</td>-->
-                    <!--                            <td class="px-2 py-1 text-sm border"><button class="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">Vérifier</button></td>-->
-                </tr>
-                </tbody>
-            </table>
+    <!-- component -->
+    <section class="container mx-auto p-6 font-mono">
+        <div class="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
+            <div class="w-full overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                    <tr class="text-md font-semibold tracking-wide text-center text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
+                        <th class="px-4 py-3">Utilisateur</th>
+                        <th class="px-10 py-3">Tweet</th>
+                        <th class="px-2 py-3">Nombre de signalement</th>
+                        <th class="px-2 py-">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tableau" class="bg-white">
+                    <tr class="text-gray-700">
+                        <!--                            <td class="px-4 py-3 text-ms border">Julien</td>-->
+                        <!--                            <td class="px-8 py-3 text-ms font-semibold border">Tweet</td>-->
+                        <!--                            <td class="px-4 py-3 text-xs border">5</td>-->
+                        <!--                            <td class="px-2 py-1 text-sm border"><button class="px-5 py-2 border-blue-500 border text-blue-500 rounded transition duration-300 hover:bg-blue-700 hover:text-white focus:outline-none">Vérifier</button></td>-->
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- component -->
-<footer class="footer bg-gray-700 relative pt-1">
-    <div class="container mx-auto px-6">
+    <!-- component -->
+    <footer class="footer bg-gray-700 relative pt-1">
+        <div class="container mx-auto px-6">
 
-        <div class="sm:flex sm:mt-8">
-            <div class="mt-8 sm:mt-0 sm:w-full sm:px-8 flex flex-col md:flex-row justify-between">
-                <div class="flex flex-col">
-                    <span class="font-bold text-white uppercase mb-2">Accueil</span>
-                    <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500">link 1</a></span>
-                </div>
-                <div class="flex flex-col">
-                    <span class="font-bold text-white uppercase mb-2">Contact</span>
-                    <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500">link 1</a></span>
-                </div>
-                <div class="flex flex-col">
-                    <span class="font-bold text-white uppercase mb-2">Tables des quêtes</span>
-                    <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500">link 1</a></span>
+            <div class="sm:flex sm:mt-8">
+                <div class="mt-8 sm:mt-0 sm:w-full sm:px-8 flex flex-col md:flex-row justify-between">
+                    <div class="flex flex-col">
+                        <span class="font-bold text-white uppercase mb-2">Accueil</span>
+                        <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500">link 1</a></span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-bold text-white uppercase mb-2">Contact</span>
+                        <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500">link 1</a></span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-bold text-white uppercase mb-2">Tables des quêtes</span>
+                        <span class="my-2"><a href="#" class="text-white  text-md hover:text-blue-500">link 1</a></span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="container mx-auto px-6">
-        <div class="mt-8 border-t-2 border-white flex flex-col items-center">
-            <div class="sm:w-2/3 text-center py-6">
-                <p class="text-sm text-white font-bold mb-2">
-                    © 2021 by Antoine JEAN, Célia LEICHTNAM, Julien ERHARD, Guillaume KLEIN
-                </p>
+        <div class="container mx-auto px-6">
+            <div class="mt-8 border-t-2 border-white flex flex-col items-center">
+                <div class="sm:w-2/3 text-center py-6">
+                    <p class="text-sm text-white font-bold mb-2">
+                        © 2021 by Antoine JEAN, Célia LEICHTNAM, Julien ERHARD, Guillaume KLEIN
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
-</footer>
-
+    </footer>
+</div>
 
 </body>
 </html>

@@ -246,7 +246,7 @@ async function affichageTweets(){
         // status tweet: "Vrai", "Faux", "Tendancieux", "En cours de signalemnt", "Non_singalé", "signalé", "signalé_plus"
         // console.log(url_tweet);
         let statusTweet = await trouveEtatTweetParUrl(url_tweet);
-        // console.log(statusTweet);
+        console.log(statusTweet);
         // console.log(JSON.stringify(statusTweet))
         switch (statusTweet) {
             case "vrai":
@@ -255,15 +255,20 @@ async function affichageTweets(){
             case "faux":
                 article.style.boxShadow = "0px 0px 10px 10px rgba(240, 25, 25, 0.8) inset";
                 break;
-            case "tandancieux":
+            case "tendancieux":
+                console.log("azertygfdsqsdf");
                 article.style.boxShadow = "0px 0px 10px 10px rgba(255, 160, 0, 0.8) inset";
                 break;
             case "signalement":
                 article.style.boxShadow = "0px 0px 10px 10px rgba(150, 150, 150, 0.8) inset";
+                ajoutBouton(article, url_tweet, statusTweet);
+                break;
+            default:
+                ajoutBouton(article, url_tweet, statusTweet);
                 break;
         }
-        // Ajout bouton
-        ajoutBouton(article, url_tweet, statusTweet);
+        // // Ajout bouton
+        // ajoutBouton(article, url_tweet, statusTweet);
     }
 }
 
