@@ -246,7 +246,7 @@ async function affichageTweets(){
         // status tweet: "Vrai", "Faux", "Tendancieux", "En cours de signalemnt", "Non_singalé", "signalé", "signalé_plus"
         // console.log(url_tweet);
         let statusTweet = await trouveEtatTweetParUrl(url_tweet);
-        console.log(statusTweet);
+        // console.log(statusTweet + " + " + url_tweet);
         // console.log(JSON.stringify(statusTweet))
         switch (statusTweet) {
             case "vrai":
@@ -256,7 +256,6 @@ async function affichageTweets(){
                 article.style.boxShadow = "0px 0px 10px 10px rgba(240, 25, 25, 0.8) inset";
                 break;
             case "tendancieux":
-                console.log("azertygfdsqsdf");
                 article.style.boxShadow = "0px 0px 10px 10px rgba(255, 160, 0, 0.8) inset";
                 break;
             case "signalement":
@@ -304,87 +303,89 @@ function getUrl(article) {
  *                 Ajout des 3 types de boutons                *
  ***************************************************************/
 async function ajoutBouton(article, url_tweet, statusTweet) {
-    // récupération du status du  tweet par rapport à l'utilisateur
-    var statusUserTweet = 0;
+    try {
+        // récupération du status du  tweet par rapport à l'utilisateur
+        var statusUserTweet = 0;
         // parseInt(await getUserStatusTweet(url_tweet));
-    //ajout d'un bouton
-    // console.log("statut du tweet: " + statusUserTweet);
-    var groupBouton = article.getElementsByClassName('css-1dbjc4n r-1ta3fxp r-18u37iz r-1wtj0ep r-1s2bzr4 r-1mdbhws')[0];
-    groupBouton.parentElement.style.display = "inline-block";
-    groupBouton.style.width = "70%";
-    groupBouton.style.float = "left";
-    groupBouton.style.marginRight = "6%";
-    if (groupBouton.parentElement.childElementCount <= 1) {
-        var input = document.createElement("div");
-        input.setAttribute("role", "button");
-        input.setAttribute("tabindex", "0");
-        input.setAttribute("class", "css-18t94o4 css-1dbjc4n r-1777fci r-bt1l66 r-1ny4l3l r-bztko3 r-lrvibr bouton_extension");
-        input.style.marginTop = "12px";
-        input.style.width = "20%";
-        input.style.height = "0px";
-        input.style.borderRadius = "10px";
-        input.style.textAlign = "center";
-        input.onclick = function () {
-            signalTweet(url_tweet, null, null);
-            statusUserTweet++;
-            console.log("est passé dans le case 0");
-            };
-        groupBouton.parentElement.appendChild(input);
-        }
-    var bouton_report = article.getElementsByClassName('css-18t94o4 css-1dbjc4n r-1777fci r-bt1l66 r-1ny4l3l r-bztko3 r-lrvibr bouton_extension')[0];
-
-    // console.log(statusUserTweet);
-    switch (statusUserTweet) {
-        case 0:
-            bouton_report.innerHTML = "signaler";
-            bouton_report.style.backgroundColor = "#0093f5";
-            console.log("est passé dans le case 0");
-
-            bouton_report.onclick = function () {
-                bouton_report.innerHTML = "Merci !";
-                bouton_report.style.backgroundColor = "#f56e00";
-                if (statusUserTweet === 0) {
-                    console.log(statusUserTweet)
-                    signalTweet(url_tweet,null,null);
-                }
-
-
-                // getReportLevelOfTweet(url_tweet);
+        //ajout d'un bouton
+        // console.log("statut du tweet: " + statusUserTweet);
+        var groupBouton = article.getElementsByClassName('css-1dbjc4n r-1ta3fxp r-18u37iz r-1wtj0ep r-1s2bzr4 r-1mdbhws')[0];
+        groupBouton.parentElement.style.display = "inline-block";
+        groupBouton.style.width = "70%";
+        groupBouton.style.float = "left";
+        groupBouton.style.marginRight = "6%";
+        if (groupBouton.parentElement.childElementCount <= 1) {
+            var input = document.createElement("div");
+            input.setAttribute("role", "button");
+            input.setAttribute("tabindex", "0");
+            input.setAttribute("class", "css-18t94o4 css-1dbjc4n r-1777fci r-bt1l66 r-1ny4l3l r-bztko3 r-lrvibr bouton_extension");
+            input.style.marginTop = "12px";
+            input.style.width = "20%";
+            input.style.height = "0px";
+            input.style.borderRadius = "10px";
+            input.style.textAlign = "center";
+            input.onclick = function () {
+                signalTweet(url_tweet, null, null);
                 statusUserTweet++;
-                // ajoutBouton(article, url_tweet, statusTweet);
+                console.log("est passé dans le case 0");
+            };
+            groupBouton.parentElement.appendChild(input);
+        }
+        var bouton_report = article.getElementsByClassName('css-18t94o4 css-1dbjc4n r-1777fci r-bt1l66 r-1ny4l3l r-bztko3 r-lrvibr bouton_extension')[0];
+
+        // console.log(statusUserTweet);
+        switch (statusUserTweet) {
+            case 0:
+                bouton_report.innerHTML = "signaler";
+                bouton_report.style.backgroundColor = "#0093f5";
+                console.log("est passé dans le case 0");
+
+                bouton_report.onclick = function () {
+                    bouton_report.innerHTML = "Merci !";
+                    bouton_report.style.backgroundColor = "#f56e00";
+                    if (statusUserTweet === 0) {
+                        console.log(statusUserTweet)
+                        signalTweet(url_tweet, null, null);
+                    }
+
+
+                    // getReportLevelOfTweet(url_tweet);
+                    statusUserTweet++;
+                    // ajoutBouton(article, url_tweet, statusTweet);
                     // showModal(url_tweet);
 
-            };
-            break;
-        case 1:
-            bouton_report.innerHTML = "Merci !";
-            bouton_report.style.backgroundColor = "#f56e00";
-            bouton_report.onclick = function () {
-                // getReportLevelOfTweet(url_tweet);
-                bouton_report.innerHTML = "+ d'info";
+                };
+                break;
+            case 1:
+                bouton_report.innerHTML = "Merci !";
+                bouton_report.style.backgroundColor = "#f56e00";
+                bouton_report.onclick = function () {
+                    // getReportLevelOfTweet(url_tweet);
+                    bouton_report.innerHTML = "+ d'info";
+                    bouton_report.style.backgroundColor = "#3541ff";
+                    bouton_report.onclick = function () {
+                        // signalTweet(url_tweet,null,null);
+                        // statusUserTweet++;
+                        console.log("est passé dans le case 1");
+
+                        // getReportLevelOfTweet(url_tweet);
+                    };
+                };
+                break;
+            case 2:
+                bouton_report.innerHTML = "Merci !";
                 bouton_report.style.backgroundColor = "#3541ff";
                 bouton_report.onclick = function () {
-                    // signalTweet(url_tweet,null,null);
-                    // statusUserTweet++;
-                    console.log("est passé dans le case 1");
+                    console.log("est passé dans le case 2");
 
                     // getReportLevelOfTweet(url_tweet);
                 };
-            };
-            break;
-        case 2:
-            bouton_report.innerHTML = "Merci !";
-            bouton_report.style.backgroundColor = "#3541ff";
-            bouton_report.onclick = function () {
-                console.log("est passé dans le case 2");
-
-                // getReportLevelOfTweet(url_tweet);
-            };
-            break;
-        default:
-            console.log("ERREUR dans l'ajout du bouton !");
-            break;
-    }
+                break;
+            default:
+                console.log("ERREUR dans l'ajout du bouton !");
+                break;
+        }
+    }catch (e) { }
 }
 
 /***************************************************************
