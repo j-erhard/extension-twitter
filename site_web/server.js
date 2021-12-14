@@ -10,6 +10,8 @@ const passport = require('passport');
 const session = require('express-session');
 
 
+
+
 //DOTENV
 const dotenv = require("dotenv");
 dotenv.config();
@@ -34,7 +36,42 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
 app.use(express.static(path.join(__dirname, "public")));
 
+app.get('/contact', function(req, res){
+    res.render('contact');
 
+    mailer.extend(app, {
+        from: req.body.email,
+        host: 'smtp.gmail.com',
+        secureConnection: true,
+        port: 465,
+        transportMethod: 'SMTP',
+        auth: {
+            user: 'projettuttwitter87@gmail.com',
+            pass: 'ptuttwitter25&'
+        }
+    })
+
+
+
+
+});
+
+app.post('/contact', function(req, res, next){
+    console.log(req.body.message);
+    app.mailer.send('email', {
+        from: req.body.email,
+        to: 'projettuttwitter87@gmail.com',
+        subject: req.body.subject,
+        message : req.body.message
+
+    }, function(err){
+        if(err){
+            console.log(err);return;
+        }
+        res.send('Email envoye');
+    });
+    //res.send("done")
+});
 
 
 
@@ -78,4 +115,6 @@ app.listen(port,function(err){
     else
         console.log(err);
 });
+
+
 
