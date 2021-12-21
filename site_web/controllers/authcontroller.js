@@ -1,25 +1,30 @@
 exports.signup = function(req, res) {
-    res.render('signup'); }
-
+    res.render('signup');
+}
 
 exports.signin = function(req, res) {
     res.render('signin');
 }
 
 exports.quetes = function(req,res){
-    res.render('tableDesQuetes'); }
+    res.render('tableDesQuetes');
+}
 
 exports.contact = function(req,res){
-    res.render('contact'); }
+    res.render('contact');
+}
 
 exports.home = function(req,res){
-    res.render('home'); }
+    res.render('home');
+}
 
 exports.verifie = function(req,res){
-    res.render('verifie', {user: req.user}); }
+    res.render('verifie', {user: req.user});
+}
 
 exports.admin = function(req,res){
-    res.render('admin'); }
+    res.render('admin');
+}
 
 exports.logout = function(req,res){
     req.session.destroy(function(err) {

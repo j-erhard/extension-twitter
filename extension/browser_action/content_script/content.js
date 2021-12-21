@@ -1,112 +1,6 @@
-// à mettre dans le manifest
-//"matches": ["<all_urls>"],
-
-
-
-
-/***************************************************************
- *         gestion de l'actualisation des bouttons             *
- ***************************************************************/
-var listeTweetVu = [[]]
-
-
-
 /***************************************************************
  *                   Récupération de données                   *
  ***************************************************************/
-
-// return un objet Json | si tu le mets dans une variable tu peut enssuite
-// récupérer l'url en faisant un res.body.tweetStatus ou un truc du genre
-// res = signaleTweet(url)
-// res.body.tweetStatus
-
-// ancienne fonction
-async function getTypeTweet(url_tweet){
-    let url = "http://localhost:8081/tweetStatus"
-
-    let response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                //Origin: origin
-            },
-            body: JSON.stringify({
-                url:url_tweet
-            })
-
-        },
-        {mode: 'cors'})
-        .then(result => result.json())
-        .then(data => {
-            // console.log(data.tweetStatus);
-            return data;
-        });
-    // if HTTP-status is 200-299
-    // get the response body
-    // console.log(JSON.stringify(response.tweetStatus))
-    // console.log((response.tweetStatus))
-    return (response.tweetStatus)
-
-}
-
-
-// ancienne fonction
-async function getUserStatusTweet(url_tweet){
-    // /tweet/signalement/level
-    let url = "http://localhost:8081/extension/signalement/level"
-
-    let response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                //Origin: origin
-            },
-            body: JSON.stringify({
-                url:url_tweet
-            })
-
-        },
-        {mode: 'cors'})
-        .then(result => result.json())
-        .then(data => {
-            // console.log(data.tweetStatus);
-            return data;
-        });
-    // if HTTP-status is 200-299
-    // get the response body
-    // console.log(JSON.stringify(response.tweetStatus))
-    // console.log((response.tweetStatus))
-    return (response.reportLvl)
-}
-
-// ancienne fonction
-async function upgradeUserStatusTweet(url_tweet){
-    let url = "http://localhost:8081/extension/signalement/augmente"
-    let response = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                //Origin: origin
-            },
-            body: JSON.stringify({
-                url:url_tweet
-            })
-
-        },
-        {mode: 'cors'})
-        .then(result => result.json())
-        .then(data => {
-            // console.log(data.tweetStatus);
-            return data;
-        });
-
-    return (response.message)
-}
-
-// ------------------- les nouvelles fonctions
 
 async function trouveEtatTweetParUrl (url_tweet)  {
     let url_api_request = "http://localhost:8081/extension/findEtatTweetByUrl"
@@ -163,42 +57,9 @@ async function signalTweet (url_tweet,sujet_signalement,description_signalement)
     return (response)
 }
 
-async function getReportLevelOfTweet(url_tweet){
-    // /tweet/signalement/level
-    let url = "http://localhost:8081/extension/signalementLevel"
-
-    let nvSignalement = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-                //Origin: origin
-            },
-            body: JSON.stringify({
-                url:url_tweet
-            })
-
-        },
-        {mode: 'cors'})
-        .then(result => result.json())
-        .then(data => {
-            // console.log(data.tweetStatus);
-            // console.log("oui c'est clair")
-            // console.log(url_tweet)
-            // console.log(data)
-            // console.log(data["result"]["0"].niveau_signalement)
-            // // console.log(data.result.0.niveau_signalemen)
-            // console.log("non")
-            return data["result"]["0"].niveau_signalement;
-        });
-    // if HTTP-status is 200-299
-    // get the response body
-    // console.log(JSON.stringify(response.tweetStatus))
-    // console.log(nvSignalement)
-    return (nvSignalement)
-}
-
-
+/***************************************************************
+ *                  Méthode pour l'extension                   *
+ ***************************************************************/
 
 /**
  * Fonction qui affiche les tweets vérifiée dès leurs chargements
@@ -236,38 +97,37 @@ async function affichageTweets(){
     const articles = document.body.getElementsByTagName('article');
     // boucles sur tous les articles (tweets)
     for (const article of articles) {
-        // récupère l'url    !!!!! NE FONCTIONNE PAS SUR LES ADDs DE TWITTER !!!
+        // récupère l'url    !!!!! FONCTIONNE AUSSI SUR LES ADDs DE TWITTER !!!
         const url_tweet = getUrl(article.innerHTML);
-        // console.log(signalTweet(url_tweet,"politique","a"))
+
         // Change l'aspect visuel des tweets
-        // distance x - distance y - dégradé - taille - (couleur r,g,b, transparence) - inset ou non
-        // article.style.boxShadow = "none"; fait bugger
         article.style.borderRadius = "10px";
-        // status tweet: "Vrai", "Faux", "Tendancieux", "En cours de signalemnt", "Non_singalé", "signalé", "signalé_plus"
-        // console.log(url_tweet);
+
+        // récupère le status du tweet: "Vrai", "Faux", "Tendancieux", "No information"
         let statusTweet = await trouveEtatTweetParUrl(url_tweet);
-        // console.log(statusTweet + " + " + url_tweet);
-        // console.log(JSON.stringify(statusTweet))
+
         switch (statusTweet) {
             case "vrai":
+                // distance x - distance y - dégradé - taille - (couleur r,g,b, transparence) - inset ou non
                 article.style.boxShadow = "0px 0px 10px 10px rgba(25, 240, 25, 0.8) inset";
                 break;
             case "faux":
+                // distance x - distance y - dégradé - taille - (couleur r,g,b, transparence) - inset ou non
                 article.style.boxShadow = "0px 0px 10px 10px rgba(240, 25, 25, 0.8) inset";
                 break;
             case "tendancieux":
+                // distance x - distance y - dégradé - taille - (couleur r,g,b, transparence) - inset ou non
                 article.style.boxShadow = "0px 0px 10px 10px rgba(255, 160, 0, 0.8) inset";
                 break;
             case "signalement":
+                // distance x - distance y - dégradé - taille - (couleur r,g,b, transparence) - inset ou non
                 article.style.boxShadow = "0px 0px 10px 10px rgba(150, 150, 150, 0.8) inset";
-                ajoutBouton(article, url_tweet, statusTweet);
+                ajoutBouton(article, url_tweet);
                 break;
             default:
-                ajoutBouton(article, url_tweet, statusTweet);
+                ajoutBouton(article, url_tweet);
                 break;
         }
-        // // Ajout bouton
-        // ajoutBouton(article, url_tweet, statusTweet);
     }
 }
 
@@ -299,16 +159,17 @@ function getUrl(article) {
     return url;
 }
 
-/***************************************************************
- *                 Ajout des 3 types de boutons                *
- ***************************************************************/
-async function ajoutBouton(article, url_tweet, statusTweet) {
+/**
+ * Ajout des 3 types du bouton signalé + merci
+ * @param article
+ * @param url_tweet
+ * @returns {Promise<void>}
+ */
+async function ajoutBouton(article, url_tweet) {
     try {
         // récupération du status du  tweet par rapport à l'utilisateur
         var statusUserTweet = 0;
         // parseInt(await getUserStatusTweet(url_tweet));
-        //ajout d'un bouton
-        // console.log("statut du tweet: " + statusUserTweet);
         var groupBouton = article.getElementsByClassName('css-1dbjc4n r-1ta3fxp r-18u37iz r-1wtj0ep r-1s2bzr4 r-1mdbhws')[0];
         groupBouton.parentElement.style.display = "inline-block";
         groupBouton.style.width = "70%";
@@ -327,13 +188,12 @@ async function ajoutBouton(article, url_tweet, statusTweet) {
             input.onclick = function () {
                 signalTweet(url_tweet, null, null);
                 statusUserTweet++;
-                console.log("est passé dans le case 0");
             };
             groupBouton.parentElement.appendChild(input);
         }
+        // récupération du bouton de notre extension
         var bouton_report = article.getElementsByClassName('css-18t94o4 css-1dbjc4n r-1777fci r-bt1l66 r-1ny4l3l r-bztko3 r-lrvibr bouton_extension')[0];
 
-        // console.log(statusUserTweet);
         switch (statusUserTweet) {
             case 0:
                 bouton_report.innerHTML = "signaler";
@@ -347,45 +207,18 @@ async function ajoutBouton(article, url_tweet, statusTweet) {
                         console.log(statusUserTweet)
                         signalTweet(url_tweet, null, null);
                     }
-
-
-                    // getReportLevelOfTweet(url_tweet);
                     statusUserTweet++;
-                    // ajoutBouton(article, url_tweet, statusTweet);
-                    // showModal(url_tweet);
-
                 };
                 break;
             case 1:
                 bouton_report.innerHTML = "Merci !";
-                bouton_report.style.backgroundColor = "#f56e00";
-                bouton_report.onclick = function () {
-                    // getReportLevelOfTweet(url_tweet);
-                    bouton_report.innerHTML = "+ d'info";
-                    bouton_report.style.backgroundColor = "#3541ff";
-                    bouton_report.onclick = function () {
-                        // signalTweet(url_tweet,null,null);
-                        // statusUserTweet++;
-                        console.log("est passé dans le case 1");
-
-                        // getReportLevelOfTweet(url_tweet);
-                    };
-                };
-                break;
-            case 2:
-                bouton_report.innerHTML = "Merci !";
                 bouton_report.style.backgroundColor = "#3541ff";
-                bouton_report.onclick = function () {
-                    console.log("est passé dans le case 2");
-
-                    // getReportLevelOfTweet(url_tweet);
-                };
                 break;
             default:
                 console.log("ERREUR dans l'ajout du bouton !");
                 break;
         }
-    }catch (e) { }
+    }catch (e){}
 }
 
 /***************************************************************
@@ -393,6 +226,9 @@ async function ajoutBouton(article, url_tweet, statusTweet) {
  ***************************************************************/
 document.addEventListener('readystatechange', () => firstLoadTweet());
 
+/**
+ * Sert à actualiser les tweets lorsque l'utilisateur scroll
+ */
 let the_timer;
 window.addEventListener('scroll', function(){
     clearTimeout(the_timer);
@@ -400,107 +236,3 @@ window.addEventListener('scroll', function(){
         await affichageTweets();
     }, 100);
 });
-
-
-const showModal = ()=>{
-    const modal = document.createElement('dialog');
-    modal.setAttribute(
-        "style",`
-height:400px;
-border-top: solid 10px #0062a7;
-border-bottom: solid 10px #0062a7;
-border-left: none;
-border-right: none;
-top:1O0px;
-border-radius:10px;
-position: fixed;
-background-color: white;
-`
-
-    );
-
-    modal.innerHTML = `<div id="popup-content"; style="height:100%; width: 300px; background-color: white; border-radius: 10px"></div>
-    <div style="position:absolute; top:0px; left:5px;">
-    <button style=" padding:5px; color: black;border: #0062a7 1px solid; border-radius: 10px; background-color: white; position: absolute; left: 95px; top: 350px ">Annuler</button>
-   
-    <h1 style="
-    position: absolute;
-    text-align: center;
-    left: 35px;
-    color: #004f85;
-    top: 10px;
-    font-size: 22px;
-    width: 250px;">Signalement du tweet </h1>
-   
-    
-    <h3 style="
-    font-size: 14px;
-    text-align: center;
-    position: absolute;
-    width: 290px;
-    top: 38px;
-    left: 16px;
-    color: #0062a7;
-     "> Veuillez préciser la nature de votre signalement</h3>
-    
-    <label style="
-    color: #0062a7;
-    position: absolute;
-    left: 33px;
-    font-weight: bold;
-    top: 123px">Catégorie</label>
-    <br>
-    <select name="categories" id="categorie-select"
-    style="
-    margin-top: 5px;
-    border: #0062a7 solid 1px;
-    border-radius: 10px;
-    position: absolute;
-    top: 140px;
-    left: 30px">
-        <option value="politique">Politique</option>
-        <option value="sante">Santé</option>
-        <option value="environnement">Environnement</option>
-        <option value="education">Education</option>
-    </select>    
-    
-    <textarea style="
-    background-color: #ffffff;
-    position: absolute;
-    top: 200px;
-    left: 30px;
-    height: 100px;
-    width: 255px;
-    border-radius: 10px;
-    border: 1px solid #0062a7;
-    resize : none;" id="Commentaires" placeholder="Commentaires"></textarea>
-    
-    <button class="oui" style="
-    position: absolute;
-    border-radius: 10px;
-    background-color: #0062a7;
-    color: white;
-    text-align: center;
-    border: #0062a7 1px solid;
-    left: 165px;
-    padding:5px;
-    top: 350px"> Envoyer </button>
-    
-    </div>`;
-
-    document.body.appendChild(modal);
-
-    const dialog = document.querySelector("dialog");
-    dialog.showModal();
-
-    dialog.querySelector("button").addEventListener("click", () => {
-        dialog.close();
-    });
-    document.getElementsByClassName("oui").item(0)
-        .addEventListener("click", () => {
-        dialog.close();
-    });
-    dialog.querySelector("button").addEventListener("click", () => {
-        dialog.close();
-    });
-}

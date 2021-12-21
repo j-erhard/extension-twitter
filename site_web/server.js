@@ -36,7 +36,12 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get('/contact', function(req, res){
+function isNotLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) return next();
+    res.redirect('/signin');
+}
+
+app.get('/contact', isNotLoggedIn, function(req, res){
     res.render('contact');
 
     mailer.extend(app, {
@@ -50,10 +55,6 @@ app.get('/contact', function(req, res){
             pass: 'ptuttwitter25&'
         }
     })
-
-
-
-
 });
 
 app.post('/contact', function(req, res, next){

@@ -84,31 +84,32 @@ CREATE TABLE verifie (
 ###############################################################
 #                  EXEMPLE et TEST de requetes                #
 ###############################################################
-
--- #vérifier qu'un tweet si un tweet a déjà été signalé:
--- #renvoi l'id si il a déjà été signalé sinon rien
--- SELECT id FROM tweets
--- WHERE tweets.url = "https://twitter.com/Visa_Fr/status/14501268814461050920"
--- ;
 /*
+-- vérifier qu'un tweet si un tweet a déjà été signalé:
+-- renvoi l'id si il a déjà été signalé sinon rien
+SELECT id FROM tweets
+WHERE tweets.url = "https://twitter.com/Visa_Fr/status/14501268814461050920"
+;
+
 SELECT * FROM tweets
 WHERE tweets.url = ?;
-*/
 
--- #ajouter un tweets si le tweet n'a pas déjà été ajouté puis avoir son id:
--- #INSERT INTO tweets (url, etat) VALUES ("https://twitter.com/exemple/010203", "signalement");
--- #SELECT id FROM tweets WHERE url = "https://twitter.com/exemple/010203";
-/*
+
+-- ajouter un tweets si le tweet n'a pas déjà été ajouté puis avoir son id:
+INSERT INTO tweets (url, etat) VALUES ("https://twitter.com/exemple/010203", "signalement");
+SELECT id FROM tweets WHERE url = "https://twitter.com/exemple/010203";
+
 INSERT INTO tweets (url, etat) VALUES (?, "signalement");
 SELECT id FROM tweets WHERE url = "?";
-*/
 
--- #ajouter un signalement à un tweet:
--- #INSERT INTO signalements (idTweet, sujet, description) VALUES (1, "politique", "Marine le Pen dit qu'elle est intelligente");
-/*
+
+ajouter un signalement à un tweet:
+INSERT INTO signalements (idTweet, sujet, description) VALUES (1, "politique", "Marine le Pen dit qu'elle est intelligente");
 INSERT INTO signalements (url, etat) VALUES (?, ?, ?);
 */
 
--- SE FAIRE UN COMPTE ADMIN:
---  UPDATE utilisateurs SET type = 'admin' WHERE email = 'admin@gmail.com';
+-- CREATION D UN COMPTE ADMIN POUR LA SOUTENANCE
+-- CREATION D UN COMPTE VERIFICATEUR POUR LA SOUTENANCE
+INSERT INTO utilisateurs (prenom, nom, email, password, type) VALUES ('julien', 'ERHARD', 'admin@gmail.com', '$2b$08$Vn3CQ1md4uz2N5GUv7WKfORUegVvbQXHM1lUTbfJMU10NG64ZgK6G', 'admin');
+INSERT INTO utilisateurs (prenom, nom, email, password, type) VALUES ('antoine', 'JEAN', 'antoine@gmail.com', '$2b$08$LgdwAnur5Gen6i99oLAsf.Wh3CWdI6A1/7bBoGsPu.P/z4aeXWKQm', 'verificateur');
 
