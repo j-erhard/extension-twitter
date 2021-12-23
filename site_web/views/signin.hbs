@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <title>Connexion</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,21 +9,21 @@
 <body class="bg-gradient-to-r from-indigo-900 via-blue-900 via-blue-700 to-blue-500 ... ">
 <div class="container ">
     <div class="item-2 ">
-        <img class="rounded-l-xl" src="login3.jpg">
+        <img class="rounded-l-xl" src="login3.jpg" alt="">
     </div>
     <div class="item-1 rounded-r-xl">
         <h1 class="font-bold"> Connexion utilisateur </h1>
         <br>
         <br>
         <form id="signin" name="signin" method="post" action="signin">
-            <label for="email">Adresse mail</label>
+            <label for="email"> Adresse mail
+                <input class="text" name="email" type="text" />
+            </label>
             <br>
-            <input class="text" name="email" type="text" />
             <br>
-            <br>
-            <label for="password">Mot de passe</label>
-            <br>
-            <input name="password" type="password" />
+            <label for="password"> Mot de passe
+                <input name="password" type="password" />
+            </label>
             <br>
             <br>
             <input class="btnLogin cursor-pointer" type="submit" value="Se connecter" />
