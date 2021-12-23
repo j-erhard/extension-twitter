@@ -3,7 +3,7 @@
  ***************************************************************/
 
 async function trouveEtatTweetParUrl (url_tweet)  {
-    let url_api_request = "http://localhost:8081/extension/findEtatTweetByUrl"
+    let url_api_request = "http://localhost:8081/tweet/findEtatTweetByUrl"
     // console.log(url_tweet);
     let etatTweet = await fetch(url_api_request, {
             method: 'POST',
@@ -28,7 +28,7 @@ async function trouveEtatTweetParUrl (url_tweet)  {
 }
 
 async function signalTweet (url_tweet,sujet_signalement,description_signalement){
-    let url_api_request = "http://localhost:8081/extension/signaleTweet"
+    let url_api_request = "http://localhost:8081/signalement/signaleTweet"
 
     // console.log(url_tweet)
     // console.log(sujet_signalement)

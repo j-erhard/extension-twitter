@@ -1,31 +1,5 @@
 const {tweets, signalements} = require("../models");
-const {Op, where} = require("sequelize");
-const {body} = require("express-validator");
-var idTweet;
-
-exports.findEtatTweetByUrl = (req,res) =>{
-    console.log(req.body.url);
-    tweets.findAll({
-        where:{url:req.body.url},
-        attributes:['etat']
-    })
-    .then(result => {
-        // console.log(result);
-        if (result.length === 0) {
-            result = [{}]
-            result[0].etat = "";
-        }
-        // console.log(result)
-        // console.log(result.length)
-        return res.status(200).send({
-            success:1,
-            data:result
-        });
-    }).catch(err => {
-        console.log(err);
-        return res.status(400).send({success:0,data:"Bad request"});
-    });
-}
+const {Op} = require("sequelize");
 
 exports.signaleTweet = async (req,res) =>{
     tweets.findAll({
@@ -75,7 +49,6 @@ exports.signaleTweet = async (req,res) =>{
     });
 }
 
-
 exports.signalementLevel = (req,res) =>{
     tweets.findAll({
         where:{url:req.body.url},
@@ -83,11 +56,11 @@ exports.signalementLevel = (req,res) =>{
     }).then(result => {
         // console.log(result)
         if (result && Object.keys(result).length === 0) result = [{"niveau_signalement":"0"}]
-            return res.status(200).send({
-                success:1,
-                result
-            });
-        }).catch(err => {
+        return res.status(200).send({
+            success:1,
+            result
+        });
+    }).catch(err => {
         console.log(err);
         return res.status(400).send({success:0,data:"Bad request"});
     });
@@ -120,18 +93,18 @@ exports.addInformationToSignlement = (req,res) => {
         tweets.findAll({
             where:{url:req.body.url},
         }).then( async tweet => {
-            let idTweet = tweet[0].id;
-            let sujet = req.body.sujet;
-            let description = req.body.description;
-            const signalement = await signalements.create({
-                idTweet,
-                sujet,
-                description
-            });
-            return res.status(200).send({
-                success: 1,
-                signalement: signalement
-            });
+                let idTweet = tweet[0].id;
+                let sujet = req.body.sujet;
+                let description = req.body.description;
+                const signalement = await signalements.create({
+                    idTweet,
+                    sujet,
+                    description
+                });
+                return res.status(200).send({
+                    success: 1,
+                    signalement: signalement
+                });
             }
         ).catch(err => {
             console.log(err);
